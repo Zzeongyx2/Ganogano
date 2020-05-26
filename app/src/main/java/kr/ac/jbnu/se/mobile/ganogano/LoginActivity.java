@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
-    //임시 저장 값
     SharedPreferences sharedPref = null;
     SharedPreferences.Editor editor = null;
 

@@ -25,6 +25,8 @@
             android:label="sign_up"
             android:screenOrientation="fullSensor">
         </activity>
+        <activity android:name=".MemoActivity"/>
+        <activity android:name=".MemoListActivity"/>
     </application>
 
 

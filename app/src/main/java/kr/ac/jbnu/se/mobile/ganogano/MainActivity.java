@@ -31,4 +31,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void memo(View o) {
+        Intent intent = new Intent(this, MemoListActivity.class);
+        startActivity(intent);
+    }
 }
