@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 // TODO : 간호술기 리스트 출력하는 액티비티
 
 public class NoteSecondFragment extends Fragment {
-//TODO : 리사이클 뷰 구현하기 
+//TODO : 리사이클 뷰 구현하기
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

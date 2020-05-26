@@ -14,10 +14,12 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
     private List<Note> list; //리스트 Note 클래스는 Note에 저장되어야 하는 거
     private Context context; // 프래그먼트를 위한 context
+
     RecyclerAdapter(List<Note> list){//생성자
         this.list = list;
     }
-    RecyclerAdapter(Context context, List<Note> list){//생성자
+
+    RecyclerAdapter(Context context, List<Note> list){//생성자2
         this.list = list;
         this.context=context;
     }
@@ -58,6 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             textView2 = itemView.findViewById(R.id.textView2);
             textView3 = itemView.findViewById(R.id.textView3);
 
+            //리스너가 클릭 이벤트 일 때 아래 함수 실행
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,8 +73,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 }
             });
+            
+            //리스너가 롱 클릭 일 때 아래 함수 실행
+            itemView.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        if(lListener != null){
+                            lListener.onItemLongClick(v,pos);
+                        }
+                    }
+                    return true;
+                }
+            });
         }
     }
+
+    // 리스너 객체 참조를 저장하는 변수
+    private OnItemClickListener mListener = null ;
+    private OnItemLongClickListener lListener = null ;
+
     @Override //크기반환
     public int getItemCount() {
         return list.size();
@@ -82,12 +104,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public interface OnItemClickListener {
         void onItemClick(View v, int position) ;
     }
-    // 리스너 객체 참조를 저장하는 변수
-    private OnItemClickListener mListener = null ;
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(View v, int position) ;
+    }
 
     // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener ;
+    }
+    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.lListener = listener ;
     }
     /*==================================================*/
 }
