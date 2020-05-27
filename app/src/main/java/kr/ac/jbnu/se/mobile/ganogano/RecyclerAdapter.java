@@ -34,6 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.textView1.setText(list.get(position).tv1); //위치에 따라 리스트 출력
         holder.textView2.setText(list.get(position).tv2);
+        //아래는 클릭 리스너 인터페이스로 구현해서 옮겨놓음
 //        holder.textView1.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -89,17 +90,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
         }
     }
+    @Override //크기반환
+    public int getItemCount() {
+        return list.size();
+    }
 
     // 리스너 객체 참조를 저장하는 변수
     private OnItemClickListener mListener = null ;
     private OnItemLongClickListener lListener = null ;
 
-    @Override //크기반환
-    public int getItemCount() {
-        return list.size();
-    }
-/*
-* 외부에서 이벤트를 처리할 수 있도록 리스너 인터페이스 구현*/
+// 외부에서 이벤트를 처리할 수 있도록 리스너 인터페이스 구현
     //클릭 리스너 인터페이스 정의
     public interface OnItemClickListener {
         void onItemClick(View v, int position) ;

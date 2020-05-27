@@ -1,4 +1,6 @@
 package kr.ac.jbnu.se.mobile.ganogano;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,7 @@ public class NoteFirstFragment extends Fragment {
     //새로운 뷰로 넘어가기 ( 다음 프레그먼트를 의미) 여기서는 실습노트 -> 간호술기리스트로 넘어가기
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        //그냥 클릭시 다음 프레그먼트 (간호수기) 실행
         adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -55,12 +57,23 @@ public class NoteFirstFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_SecondFragment,bundle);
             }
         });
-
+        //롱클릭
         adapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
             @Override
             public void onItemLongClick(View v, int position) {
-                //TODO : 선택지 나오게 하기
-                Toast.makeText(getContext(),"롱클릭",Toast.LENGTH_SHORT).show();
+                builder.setItems(R.array.LAN, new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO : 선택지에 따른 수정과 삭제페이지 이동하기
+                        String[] items = getResources().getStringArray(R.array.LAN);//해당 항목리스트 받아와서 출력
+                        Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show(); //지금은 클릭한거 보여주는 거
+                    }
+                });
+
+                //Toast.makeText(getContext(),"롱클릭",Toast.LENGTH_SHORT).show();
             }
         });
 
