@@ -1,6 +1,7 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,14 +31,12 @@ public class NoteFirstFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prepareData(); //임시
-
-
     }
 
     @Override //onCreate 호출 후 호출
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.note_fragment_first, container, false);
-        recyclerView = rootView.findViewById(R.id.rv);//리사이클뷰
+        recyclerView = rootView.findViewById(R.id.rv);//recyclerView
         recyclerView.setHasFixedSize(true);
         adapter = new RecyclerAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -71,16 +70,24 @@ public class NoteFirstFragment extends Fragment {
                builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialog, int which) {
-                       String[] items = getResources().getStringArray(R.array.LAN);
-                       Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show();
+//                       String[] items = getResources().getStringArray(R.array.LAN);
+                       if(which==0){
+                           Intent I = new Intent(getActivity(), NoteRevisionActivity.class);
+                           startActivity(I);
+                       }else{
+                           //TODO : 삭제로직
+                           adapter.notifyDataSetChanged();
+                       }
                    }
                 });
                builder.show();
             }
         });
     }
+//            adapter.addItem(data);를 통해 추가
+//        adapter.notifyDataSetChanged();로 갑 변경을 알린다.
     private void prepareData() {
-        // 초기 데이터 값
+        // 초기 데이터 값, 추후 삭제할 것
         List<String> listTitle = Arrays.asList("국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립",
                 "국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립");
         List<String> listContent = Arrays.asList(
@@ -101,7 +108,7 @@ public class NoteFirstFragment extends Fragment {
                 "이 동물은 펭귄입니다.",
                 "이 꽃은 튤립입니다."
         );
-        List<Integer> listResId = Arrays.asList(
+        List<Integer> listResId = Arrays.asList( //이미지인데 굳이 안넣어도 됨
                 R.drawable.ic_launcher_foreground,
                 R.drawable.ic_launcher_foreground,
                 R.drawable.ic_launcher_foreground,
@@ -126,12 +133,10 @@ public class NoteFirstFragment extends Fragment {
             data.setContent(listContent.get(i));
             data.setResId(listResId.get(i));
             list.add(data);
-//            // 각 값이 들어간 data를 adapter에 추가합니다.
-//            adapter.addItem(data);
+
         }
 
-//        // adapter의 값이 변경되었다는 것을 알려줍니다.
-//        adapter.notifyDataSetChanged();
+
     }
 
 }

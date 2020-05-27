@@ -34,6 +34,7 @@
 
         <activity android:name=".NoteActivity"/>
         <activity android:name=".NoteRevisionActivity"/>
+        <activity android:name=".NoteNurseRevisionActivity"/>
 
         <service
             android:name=".MusicService"

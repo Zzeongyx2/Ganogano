@@ -11,13 +11,11 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnLogOut;
-    Button btnNote;
+    Button btnLogOut,btnNote,btnSetting;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     SharedPreferences sf; //이미 저장된 값 가져오기
     TextView DDay;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogOut = (Button) findViewById(R.id.btn_logout);
         btnNote = (Button) findViewById(R.id.btn_note);
-
+        btnSetting = findViewById(R.id.btn_setting);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent I = new Intent(MainActivity.this, NoteActivity.class);
+                startActivity(I);
+
+            }
+        });
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(MainActivity.this, Settings.class);
                 startActivity(I);
             }
         });

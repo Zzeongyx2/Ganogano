@@ -1,6 +1,7 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,8 +69,13 @@ public class NoteSecondFragment extends Fragment {
                 builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String[] items = getResources().getStringArray(R.array.LAN);
-                        Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show();
+                        if(which==0){
+                            Intent I = new Intent(getActivity(), NoteNurseRevisionActivity.class);
+                            startActivity(I);
+                        }else{
+                            //TODO : 삭제후 리스트 다시 불러오는거
+                            //adapter.notifyDataSetChanged();
+                        }
                     }
                 });
                 builder.show();
