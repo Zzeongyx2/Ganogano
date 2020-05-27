@@ -3,7 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FCF5EF">
+    android:background="#FCF5EF"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/DDAY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="D-DAY"
+        android:layout_marginTop="50dp"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/btn_note"

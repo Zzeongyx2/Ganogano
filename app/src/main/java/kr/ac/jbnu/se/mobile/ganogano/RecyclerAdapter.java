@@ -4,25 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
-    private List<Note> list; //리스트 Note 클래스는 Note에 저장되어야 하는 거
-    private Context context; // 프래그먼트를 위한 context
+    private ArrayList<Data> listData;
 
-    RecyclerAdapter(List<Note> list){//생성자
-        this.list = list;
+    RecyclerAdapter(ArrayList<Data> list){//생성자2
+        this.listData = list;
     }
 
-    RecyclerAdapter(Context context, List<Note> list){//생성자2
-        this.list = list;
-        this.context=context;
-    }
     @NonNull
     @Override //아이템 뷰를 위한 뷰 홀더 객체를 생성하여 리턴
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,34 +30,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override //뷰에 아이템 매핑 아이템뷰 보여주기
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.textView1.setText(list.get(position).tv1); //위치에 따라 리스트 출력
-        holder.textView2.setText(list.get(position).tv2);
-        //아래는 클릭 리스너 인터페이스로 구현해서 옮겨놓음
-//        holder.textView1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), list.get(position).tv1, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        holder.textView2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), list.get(position).tv2, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        //text3는 필요할 때 넣기 이미지 뷰 필요한 경우 나중에
+        // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
+        holder.onBind(listData.get(position));
     }
+
+    @Override
+    public int getItemCount() {// RecyclerView의 총 개수 입니다.
+        return listData.size();
+    }
+
+    void addItem(Data data) {//외부에서 추가시킬 함수
+        listData.add(data);
+    }
+
     //하나의 View를 보존하는 역활을 한다.
     class ViewHolder extends RecyclerView.ViewHolder { //뷰 홀더에 아이템들 담기, 문제시 외부 클래스로 뺴기
-        TextView textView1, textView2, textView3;
+        private TextView textView1,textView2;
+        private ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
-            textView3 = itemView.findViewById(R.id.textView3);
+            imageView = itemView.findViewById(R.id.imageView);
 
             //리스너가 클릭 이벤트 일 때 아래 함수 실행
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +82,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 }
             });
         }
-    }
-    @Override //크기반환
-    public int getItemCount() {
-        return list.size();
+        void onBind(Data data) {
+            textView1.setText(data.getTitle());
+            textView2.setText(data.getContent());
+            imageView.setImageResource(data.getResId());
+        }
     }
 
+
+//================클릭 이벤트 처리===========================//
     // 리스너 객체 참조를 저장하는 변수
     private OnItemClickListener mListener = null ;
     private OnItemLongClickListener lListener = null ;

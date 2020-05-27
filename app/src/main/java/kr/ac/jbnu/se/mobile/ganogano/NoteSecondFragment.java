@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // TODO : 간호술기 리스트 출력하는 액티비티
@@ -19,7 +20,7 @@ public class NoteSecondFragment extends Fragment {
     //TODO : 리사이클 뷰 구현하기
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    List<Note> list = new ArrayList<>(); //혹시 모를 list
+    ArrayList<Data> list = new ArrayList<>(); //혹시 모를 list
 
     @Override //onCreateView 전에 호출
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,10 +30,10 @@ public class NoteSecondFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.note_fragment_first, container, false);
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.note_fragment_second, container, false);
         recyclerView = rootView.findViewById(R.id.rv);//리사이클뷰
         recyclerView.setHasFixedSize(true);
-        adapter = new RecyclerAdapter(getActivity(),list); //리스트 넣기
+        adapter = new RecyclerAdapter(list); //리스트 넣기
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
@@ -64,11 +65,56 @@ public class NoteSecondFragment extends Fragment {
             }
         });
     }
-    //임시데이터
-    public void prepareData(){
-        list.add(new Note("안녕","하세요","시험"));
-        list.add(new Note("뱃보이","사이코","피카부"));
-        list.add(new Note("안녕","하세요","시험"));
-        list.add(new Note("안녕","하세요","시험"));
+
+    private void prepareData() {
+        // 임의의 데이터입니다.
+        List<String> listTitle = Arrays.asList("국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립",
+                "국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립");
+        List<String> listContent = Arrays.asList(
+                "이 꽃은 국화입니다.",
+                "여기는 사막입니다.",
+                "이 꽃은 수국입니다.",
+                "이 동물은 해파리입니다.",
+                "이 동물은 코알라입니다.",
+                "이것은 등대입니다.",
+                "이 동물은 펭귄입니다.",
+                "이 꽃은 튤립입니다.",
+                "이 꽃은 국화입니다.",
+                "여기는 사막입니다.",
+                "이 꽃은 수국입니다.",
+                "이 동물은 해파리입니다.",
+                "이 동물은 코알라입니다.",
+                "이것은 등대입니다.",
+                "이 동물은 펭귄입니다.",
+                "이 꽃은 튤립입니다."
+        );
+        List<Integer> listResId = Arrays.asList(
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background,
+                R.drawable.ic_launcher_background
+        );
+        for (int i = 0; i < listTitle.size(); i++) {
+            // 각 List의 값들을 data 객체에 set 해줍니다.
+            Data data = new Data();
+            data.setTitle(listTitle.get(i));
+            data.setContent(listContent.get(i));
+            data.setResId(listResId.get(i));
+            list.add(data);
+            //adapter.addItem(data); 값 추가
+        }
+        //adapter.notifyDataSetChanged();// adapter의 값이 변경되었다는 것을 알려줍니다.
     }
 }

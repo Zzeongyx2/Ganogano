@@ -14,15 +14,15 @@ import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
   //  RecyclerView recyclerView;
-    List<Note> list = new ArrayList<>();
+    List<Data> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_activity);
 //        recyclerView = findViewById(R.id.rv);//리사이클뷰
-        Toolbar toolbar = findViewById(R.id.toolbar);//툴바
-        setSupportActionBar(toolbar);//툴바지원
+       // Toolbar toolbar = findViewById(R.id.toolbar);//툴바
+        //setSupportActionBar(toolbar);//툴바지원
 
         FloatingActionButton fab = findViewById(R.id.fab); //플로팅버튼
         fab.setOnClickListener(new View.OnClickListener() {

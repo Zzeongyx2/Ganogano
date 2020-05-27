@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".NoteThirdFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#FCF5EF">
+
+    <TextView
+        android:id="@+id/Sickness_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="병명"
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/Sickness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="date"
+        android:inputType="date" />
+
+    <TextView
+        android:layout_weight="0.5"
+        android:id="@+id/Prescription_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="처방  "
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/Prescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="hospital"
+        android:inputType="text" />
+
+
+    <TextView
+        android:layout_weight="0.5"
+        android:id="@+id/Precautions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="주의사항"
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/Precautions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="date"
+        android:inputType="date" />
+
+    <TextView
+        android:layout_weight="0.5"
+        android:id="@+id/Other_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="기타  "
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_weight="1"
+        android:id="@+id/Other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="date"
+        android:inputType="date" />
+
+    <Button
+
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="SAVE"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:background="#0077FF"/>
+</LinearLayout>
