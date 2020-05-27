@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -23,6 +22,7 @@ public class NoteActivity extends AppCompatActivity {
 //        recyclerView = findViewById(R.id.rv);//리사이클뷰
        // Toolbar toolbar = findViewById(R.id.toolbar);//툴바
         //setSupportActionBar(toolbar);//툴바지원
+
 
         FloatingActionButton fab = findViewById(R.id.fab); //플로팅버튼
         fab.setOnClickListener(new View.OnClickListener() {

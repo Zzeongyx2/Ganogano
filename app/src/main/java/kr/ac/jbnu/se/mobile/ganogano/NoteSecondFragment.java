@@ -1,4 +1,6 @@
 package kr.ac.jbnu.se.mobile.ganogano;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,13 +63,22 @@ public class NoteSecondFragment extends Fragment {
             @Override
             public void onItemLongClick(View v, int position) {
                 //TODO : 선택지 나오게 하기
-                Toast.makeText(getContext(),"롱클릭",Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                builder.setTitle("원하는 작업을 선택해 주세요");
+                builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String[] items = getResources().getStringArray(R.array.LAN);
+                        Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.show();
             }
         });
     }
 
     private void prepareData() {
-        // 임의의 데이터입니다.
+        // 초기 데이터 값
         List<String> listTitle = Arrays.asList("국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립",
                 "국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립");
         List<String> listContent = Arrays.asList(

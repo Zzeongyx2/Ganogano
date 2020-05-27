@@ -40,7 +40,6 @@ public class NoteRevisionActivity extends AppCompatActivity
         @Override
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
-            //Result.setText(getDday(a_year, a_monthOfYear, a_dayOfMonth));
             result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
         }
     };

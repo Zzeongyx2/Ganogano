@@ -24,11 +24,14 @@ public class NoteFirstFragment extends Fragment {
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     ArrayList<Data> list = new ArrayList<>(); //혹시 모를 list
+    final String item[] = {"수정","삭제"};
 
     @Override //onCreateView 전에 호출
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prepareData();
+        prepareData(); //임시
+
+
     }
 
     @Override //onCreate 호출 후 호출
@@ -59,34 +62,25 @@ public class NoteFirstFragment extends Fragment {
         });
         //롱클릭
         adapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
             @Override
             public void onItemLongClick(View v, int position) {
-                builder.setItems(R.array.LAN, new DialogInterface.OnClickListener(){
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO : 선택지에 따른 수정과 삭제페이지 이동하기
-                        String[] items = getResources().getStringArray(R.array.LAN);//해당 항목리스트 받아와서 출력
-                        Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show(); //지금은 클릭한거 보여주는 거
-                    }
+                //TODO : 선택창에 따라 다른 거 만들기
+               AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+               builder.setTitle("원하는 작업을 선택해 주세요");
+               builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       String[] items = getResources().getStringArray(R.array.LAN);
+                       Toast.makeText(getContext(),items[which],Toast.LENGTH_LONG).show();
+                   }
                 });
-
-                //Toast.makeText(getContext(),"롱클릭",Toast.LENGTH_SHORT).show();
+               builder.show();
             }
         });
-
-/*        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(NoteFirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });*/
     }
     private void prepareData() {
-        // 임의의 데이터입니다.
+        // 초기 데이터 값
         List<String> listTitle = Arrays.asList("국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립",
                 "국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립");
         List<String> listContent = Arrays.asList(
