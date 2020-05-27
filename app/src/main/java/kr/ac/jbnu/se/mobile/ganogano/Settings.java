@@ -28,8 +28,8 @@ public class Settings extends Activity {
         sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         //===============상태 반영================//
-        if(sharedPref.getInt("effect",1)==0) effect.setChecked(false);//초기 설정 값과 다르다면
-        bgm.setChecked(sharedPref.getBoolean("bgm",false));
+        if (sharedPref.getInt("effect", 1) == 0) effect.setChecked(false);//초기 설정 값과 다르다면
+        bgm.setChecked(sharedPref.getBoolean("bgm", false));
 
         //==================배경음악==============//
         if (mp == null) {
@@ -37,11 +37,12 @@ public class Settings extends Activity {
             mp.setLooping(true);
         }
     }
+
     public void bgm(View o) {
         if (bgm.isChecked()) {
             mp.start();
             editor.putBoolean("bgm", true);
-        }else if(mp.isPlaying()){
+        } else if (mp.isPlaying()) {
             mp.pause();
             editor.putBoolean("bgm", false);
         }

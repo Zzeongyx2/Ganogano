@@ -1,4 +1,5 @@
 package kr.ac.jbnu.se.mobile.ganogano;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +34,10 @@ public class NoteSecondFragment extends Fragment {
         prepareData();
         String msg = getArguments().getString("hospital_name"); //번들내용 가져오기
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.note_fragment_second, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.note_fragment_second, container, false);
         recyclerView = rootView.findViewById(R.id.rv);//리사이클뷰
         recyclerView.setHasFixedSize(true);
         adapter = new RecyclerAdapter(list); //리스트 넣기
@@ -56,7 +60,7 @@ public class NoteSecondFragment extends Fragment {
                 //=========================================================//
 
                 NavHostFragment.findNavController(NoteSecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_ThirdFragment,bundle);
+                        .navigate(R.id.action_SecondFragment_to_ThirdFragment, bundle);
             }
         });
 
@@ -64,15 +68,15 @@ public class NoteSecondFragment extends Fragment {
             @Override
             public void onItemLongClick(View v, int position) {
                 //TODO : 선택지 나오게 하기
-                AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("원하는 작업을 선택해 주세요");
                 builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(which==0){
+                        if (which == 0) {
                             Intent I = new Intent(getActivity(), NoteNurseRevisionActivity.class);
                             startActivity(I);
-                        }else{
+                        } else {
                             //TODO : 삭제후 리스트 다시 불러오는거
                             //adapter.notifyDataSetChanged();
                         }
@@ -106,22 +110,22 @@ public class NoteSecondFragment extends Fragment {
                 "이 꽃은 튤립입니다."
         );
         List<Integer> listResId = Arrays.asList(
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background,
-                R.drawable.ic_launcher_background
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_error_outline_black_24dp,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_launcher_foreground
         );
         for (int i = 0; i < listTitle.size(); i++) {
             // 각 List의 값들을 data 객체에 set 해줍니다.

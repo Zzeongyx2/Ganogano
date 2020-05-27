@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<Data> listData;
 
-    RecyclerAdapter(ArrayList<Data> list){//생성자2
+    RecyclerAdapter(ArrayList<Data> list) {//생성자2
         this.listData = list;
     }
 
@@ -45,7 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     //하나의 View를 보존하는 역활을 한다.
     class ViewHolder extends RecyclerView.ViewHolder { //뷰 홀더에 아이템들 담기, 문제시 외부 클래스로 뺴기
-        private TextView textView1,textView2;
+        private TextView textView1, textView2;
         private ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -58,30 +58,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition() ;
+                    int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         // 리스너 객체의 메서드 호출.
                         if (mListener != null) {
-                            mListener.onItemClick(v, pos) ;
+                            mListener.onItemClick(v, pos);
                         }
                     }
                 }
             });
-            
+
             //리스너가 롱 클릭 일 때 아래 함수 실행
-            itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     int pos = getAdapterPosition();
-                    if(pos != RecyclerView.NO_POSITION){
-                        if(lListener != null){
-                            lListener.onItemLongClick(v,pos);
+                    if (pos != RecyclerView.NO_POSITION) {
+                        if (lListener != null) {
+                            lListener.onItemLongClick(v, pos);
                         }
                     }
                     return true;
                 }
             });
         }
+
         void onBind(Data data) {
             textView1.setText(data.getTitle());
             textView2.setText(data.getContent());
@@ -89,31 +90,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-
-//================클릭 이벤트 처리===========================//
-    // 리스너 객체 참조를 저장하는 변수
-    private OnItemClickListener mListener = null ;
-    private OnItemLongClickListener lListener = null ;
-
-// 외부에서 이벤트를 처리할 수 있도록 리스너 인터페이스 구현
+    //================클릭 이벤트 처리===========================//
+    // 외부에서 이벤트를 처리할 수 있도록 리스너 인터페이스 구현
     //클릭 리스너 인터페이스 정의
+
+    // 리스너 객체 참조를 저장하는 변수
+    private OnItemClickListener mListener = null;
+    private OnItemLongClickListener lListener = null;
+
     public interface OnItemClickListener {
-        void onItemClick(View v, int position) ;
+        void onItemClick(View v, int position);
     }
 
     public interface OnItemLongClickListener {
-        void onItemLongClick(View v, int position) ;
+        void onItemLongClick(View v, int position);
     }
 
     // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener ;
+        this.mListener = listener;
     }
+
     // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.lListener = listener ;
+        this.lListener = listener;
     }
-    /*==================================================*/
+
 }
 
 

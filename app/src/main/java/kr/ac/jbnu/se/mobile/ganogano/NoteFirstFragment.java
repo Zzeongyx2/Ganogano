@@ -1,4 +1,5 @@
 package kr.ac.jbnu.se.mobile.ganogano;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +26,6 @@ public class NoteFirstFragment extends Fragment {
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     ArrayList<Data> list = new ArrayList<>(); //혹시 모를 list
-    final String item[] = {"수정","삭제"};
 
     @Override //onCreateView 전에 호출
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class NoteFirstFragment extends Fragment {
 
     @Override //onCreate 호출 후 호출
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.note_fragment_first, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.note_fragment_first, container, false);
         recyclerView = rootView.findViewById(R.id.rv);//recyclerView
         recyclerView.setHasFixedSize(true);
         adapter = new RecyclerAdapter(list);
@@ -56,7 +56,7 @@ public class NoteFirstFragment extends Fragment {
                 bundle.putString("hospital_name", String.valueOf(position));//TODO : position에 따른 값 가져오기
 
                 NavHostFragment.findNavController(NoteFirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment,bundle);
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment, bundle);
             }
         });
         //롱클릭
@@ -65,26 +65,27 @@ public class NoteFirstFragment extends Fragment {
             @Override
             public void onItemLongClick(View v, int position) {
                 //TODO : 선택창에 따라 다른 거 만들기
-               AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
-               builder.setTitle("원하는 작업을 선택해 주세요");
-               builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("원하는 작업을 선택해 주세요");
+                builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 //                       String[] items = getResources().getStringArray(R.array.LAN);
-                       if(which==0){
-                           Intent I = new Intent(getActivity(), NoteRevisionActivity.class);
-                           startActivity(I);
-                       }else{
-                           //TODO : 삭제로직
-                           adapter.notifyDataSetChanged();
-                       }
-                   }
+                        if (which == 0) {
+                            Intent I = new Intent(getActivity(), NoteRevisionActivity.class);
+                            startActivity(I);
+                        } else {
+                            //TODO : 삭제로직
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
                 });
-               builder.show();
+                builder.show();
             }
         });
     }
-//            adapter.addItem(data);를 통해 추가
+
+    //            adapter.addItem(data);를 통해 추가
 //        adapter.notifyDataSetChanged();로 갑 변경을 알린다.
     private void prepareData() {
         // 초기 데이터 값, 추후 삭제할 것
@@ -109,7 +110,7 @@ public class NoteFirstFragment extends Fragment {
                 "이 꽃은 튤립입니다."
         );
         List<Integer> listResId = Arrays.asList( //이미지인데 굳이 안넣어도 됨
-                R.drawable.ic_launcher_foreground,
+                R.drawable.ic_error_outline_black_24dp,
                 R.drawable.ic_launcher_foreground,
                 R.drawable.ic_launcher_foreground,
                 R.drawable.ic_launcher_foreground,
