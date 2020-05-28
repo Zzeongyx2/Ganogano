@@ -16,6 +16,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +29,8 @@ public class NoteFirstFragment extends Fragment {
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
     ArrayList<Data> list = new ArrayList<>(); //혹시 모를 list
+    FloatingActionButton fab; //플로팅버튼
+
 
     @Override //onCreateView 전에 호출
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +46,8 @@ public class NoteFirstFragment extends Fragment {
         adapter = new RecyclerAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
+
+        fab = rootView.findViewById(R.id.fab);
 
         return rootView;        // Inflate the layout for this fragment
     }
@@ -59,12 +66,12 @@ public class NoteFirstFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_SecondFragment, bundle);
             }
         });
+
         //롱클릭
         adapter.setOnItemLongClickListener(new RecyclerAdapter.OnItemLongClickListener() {
 
             @Override
             public void onItemLongClick(View v, int position) {
-                //TODO : 선택창에 따라 다른 거 만들기
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("원하는 작업을 선택해 주세요");
                 builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
@@ -76,11 +83,23 @@ public class NoteFirstFragment extends Fragment {
                             startActivity(I);
                         } else {
                             //TODO : 삭제로직
-                            adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();//변화 적용하는 adapter
                         }
                     }
                 });
                 builder.show();
+            }
+        });
+        //플로팅 버튼
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO : +버튼 눌렀을 때 추가페이지 들어가기
+                Intent I = new Intent(getActivity(), AddNoteActivity.class);
+                startActivity(I);
+                //스넥바 빼도됨
+                Snackbar.make(view, "들어가는 중", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
@@ -110,22 +129,22 @@ public class NoteFirstFragment extends Fragment {
                 "이 꽃은 튤립입니다."
         );
         List<Integer> listResId = Arrays.asList( //이미지인데 굳이 안넣어도 됨
-                R.drawable.ic_error_outline_black_24dp,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground,
-                R.drawable.ic_launcher_foreground
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_add_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp
         );
         for (int i = 0; i < listTitle.size(); i++) {
             // 각 List의 값들을 data 객체에 set 해줍니다.

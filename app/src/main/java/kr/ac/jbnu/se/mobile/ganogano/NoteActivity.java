@@ -22,17 +22,7 @@ public class NoteActivity extends AppCompatActivity {
 //        recyclerView = findViewById(R.id.rv);//리사이클뷰
         // Toolbar toolbar = findViewById(R.id.toolbar);//툴바
         //setSupportActionBar(toolbar);//툴바지원
-
-
-        FloatingActionButton fab = findViewById(R.id.fab); //플로팅버튼
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO : +버튼 눌렀을 때 추가페이지 들어가기
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //-> 플로팅 버튼 프래그 먼트로 옮김
 
         //-> fragment 로 옮김
 
