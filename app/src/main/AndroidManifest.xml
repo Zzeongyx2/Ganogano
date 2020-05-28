@@ -35,6 +35,8 @@
         <activity android:name=".NoteActivity"/>
         <activity android:name=".NoteRevisionActivity"/>
         <activity android:name=".NoteNurseRevisionActivity"/>
+        <activity android:name=".AddNurseNoteActivity"/>
+        <activity android:name=".AddNoteActivity"/>
 
         <service
             android:name=".MusicService"

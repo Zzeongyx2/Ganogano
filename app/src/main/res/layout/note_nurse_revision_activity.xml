@@ -1,86 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".NoteThirdFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FCF5EF"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#FCF5EF">
+    tools:context=".NoteThirdFragment">
 
-    <TextView
-        android:id="@+id/Sickness_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
-        android:gravity="center"
-        android:text="병명"
-        android:textSize="20dp" />
-
-    <EditText
-        android:layout_weight="1"
-        android:id="@+id/Sickness"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="date"
-        android:inputType="date" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_weight="0.5"
-        android:id="@+id/Prescription_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="처방  "
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/Sickness_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="병명"
+            android:textSize="17dp" />
 
-    <EditText
-        android:layout_weight="1"
-        android:id="@+id/Prescription"
+        <EditText
+            android:id="@+id/Sickness"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="date"
+            android:inputType="date" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="hospital"
-        android:inputType="text" />
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/Prescription_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:text="처방  "
+            android:textSize="17dp" />
 
-    <TextView
-        android:layout_weight="0.5"
-        android:id="@+id/Precautions_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="주의사항"
-        android:textSize="20dp" />
+        <EditText
+            android:id="@+id/Prescription"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="hospital"
+            android:inputType="text" />
+    </LinearLayout>
 
-    <EditText
-        android:layout_weight="1"
-        android:id="@+id/Precautions"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="date"
-        android:inputType="date" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_weight="0.5"
-        android:id="@+id/Other_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="기타  "
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/Precautions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0.5"
+            android:text="주의사항"
+            android:textSize="17dp" />
 
-    <EditText
-        android:layout_weight="1"
-        android:id="@+id/Other"
+        <EditText
+            android:id="@+id/Precautions"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="date"
+            android:inputType="date" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="date"
-        android:inputType="date" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/Other_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:text="기타  "
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/Other"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="date"
+            android:inputType="date" />
+    </LinearLayout>
+
 
     <Button
 
@@ -88,8 +112,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:background="@color/colorRV"
         android:text="SAVE"
-        android:textSize="25dp"
         android:textColor="#FFFFFF"
-        android:background="@color/colorViolet"/>
+        android:textSize="25dp" />
 </LinearLayout>

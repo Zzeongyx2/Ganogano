@@ -12,15 +12,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
 //TODO: 수정페이지
 //일단 D-Day 계산 넣음
 // 여기서 수정도 이뤄져야 한다.
-public class NoteRevisionActivity extends AppCompatActivity
-{
+public class NoteRevisionActivity extends AppCompatActivity {
     //공유
     SharedPreferences sharedPref = null;
     SharedPreferences.Editor editor = null;
@@ -31,9 +34,11 @@ public class NoteRevisionActivity extends AppCompatActivity
 
     // 현재 날짜를 알기 위해 사용
     private Calendar mCalendar;
-    private String result=null;
+    private String result = null;
     private CheckBox DcheckBox;
+    private TextView resultTxt;
     private Button saveButton;
+    final String dayformat = "%d 년 %d 월 %d일"; //날자형식
 
     // DatePicker 에서 날짜 선택 시 호출
     private OnDateSetListener mDateSetListener = new OnDateSetListener() {
@@ -41,6 +46,7 @@ public class NoteRevisionActivity extends AppCompatActivity
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
             result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
+            resultTxt.setText(String.format(dayformat, a_year, a_monthOfYear, a_dayOfMonth));
         }
     };
 
@@ -54,6 +60,7 @@ public class NoteRevisionActivity extends AppCompatActivity
 
         DcheckBox = findViewById(R.id.date_checkbox);
         saveButton = findViewById(R.id.saveBtn);
+        resultTxt = findViewById(R.id.D_DAY_BOX);
         // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
 
@@ -61,7 +68,7 @@ public class NoteRevisionActivity extends AppCompatActivity
         mCalendar = new GregorianCalendar();
 
         // Input date click 시 date picker 호출
-        OnClickListener clickListener = new OnClickListener() {
+        resultTxt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View a_view) {
                 final int year = mCalendar.get(Calendar.YEAR);
@@ -71,17 +78,16 @@ public class NoteRevisionActivity extends AppCompatActivity
                 DatePickerDialog dialog = new DatePickerDialog(NoteRevisionActivity.this, mDateSetListener, year, month, day);
                 dialog.show();
             }
-        };
-        findViewById(R.id.date).setOnClickListener(clickListener);
+        });
 
         //체크박스 클릭시
         DcheckBox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DcheckBox.isChecked()==true){
-                    editor.putString("D_DAY",result);
-                }else{
-                    editor.putString("D_DAY","날짜가 설정되지 않았습니다");
+                if (DcheckBox.isChecked() == true) {
+                    editor.putString("D_DAY", result);
+                } else {
+                    editor.putString("D_DAY", "날짜가 설정되지 않았습니다");
                 }
                 editor.commit();
             }
@@ -90,9 +96,8 @@ public class NoteRevisionActivity extends AppCompatActivity
         saveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(NoteRevisionActivity.this, MainActivity.class);
-//                intent.putExtra("D_DAY",sharedPref.getString("DDAY","No-D-DAY"));
-//                startActivityForResult(intent,REQUEST_TEST);
+                //TODO : SAVE시 DB 저장
+                //finish()
             }
         });
     }
