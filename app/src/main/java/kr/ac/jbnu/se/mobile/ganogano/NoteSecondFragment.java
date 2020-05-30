@@ -103,20 +103,34 @@ public class NoteSecondFragment extends Fragment {
 
     private void prepareData() {
         // 초기 데이터 값
-        List<String> listTitle = Arrays.asList("A .", "E hospital", "D hospital", "V hospital", "E hospital", "L hospital", "V hospital", "E hospital",
-                "T hospital");
+        List<String> listTitle = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+                "O");
         List<String> listContent = Arrays.asList(
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01",
-                "200.01.01~200.01.01"
-        );
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01",
+                "300.01.01~300.01.01"
+
+
+                );
         List<Integer> listResId = Arrays.asList( //이미지인데 굳이 안넣어도 됨
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
+                R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,

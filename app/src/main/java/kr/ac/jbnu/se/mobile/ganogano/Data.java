@@ -1,4 +1,5 @@
 package kr.ac.jbnu.se.mobile.ganogano;
+//TODO : 데이터베이스 TYPE과 맞추기
 
 public class Data {
 
