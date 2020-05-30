@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FCF5EF"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".NoteThirdFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -116,6 +115,7 @@
         android:layout_margin="20dp"
         android:background="@color/colorRV"
         android:text="SAVE"
+        android:onClick="save"
         android:textColor="#FFFFFF"
         android:textSize="25dp" />
 </LinearLayout>

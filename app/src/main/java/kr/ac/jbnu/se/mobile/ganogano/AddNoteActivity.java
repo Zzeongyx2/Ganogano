@@ -1,12 +1,9 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
 import android.app.DatePickerDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -16,10 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -40,7 +35,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private CheckBox DcheckBox;
     private TextView resultTxt;
     private Button saveButton;
-    final String dayformat = "%d 년 %d 월 %d일"; //날자형식
+    final String day_format = "%d 년 %d 월 %d일"; //날자형식
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
     // DatePicker 에서 날짜 선택 시 호출
@@ -49,7 +44,7 @@ public class AddNoteActivity extends AppCompatActivity {
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
             result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
-            resultTxt.setText(String.format(dayformat, a_year, a_monthOfYear, a_dayOfMonth));
+            resultTxt.setText(String.format(day_format, a_year, a_monthOfYear, a_dayOfMonth));
         }
     };
 
@@ -96,7 +91,7 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
         //세이브 버튼 클릭시 startActivity사용하기
-        saveButton.setOnClickListener(new View.OnClickListener() {
+/*        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO : SAVE시 DB 저장
@@ -104,7 +99,10 @@ public class AddNoteActivity extends AppCompatActivity {
                 Do_Notification();
                 //finish()
             }
-        });
+        });*/
+    }
+    public void save(View o){
+        Do_Notification();
     }
     /**
      * D-day 반환

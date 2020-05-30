@@ -107,14 +107,4 @@
             android:hint="date"
             android:background="@color/colorBRWhite" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/colorRV"
-        android:text="SAVE"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
 </LinearLayout>

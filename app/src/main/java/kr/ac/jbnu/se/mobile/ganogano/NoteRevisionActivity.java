@@ -92,14 +92,13 @@ public class NoteRevisionActivity extends AppCompatActivity {
                 editor.commit();
             }
         });
-        //세이브 버튼 클릭시 startActivity사용하기
-        saveButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO : SAVE시 DB 저장
-                //finish()
-            }
-        });
+
+    }
+    public void save(View o){
+        //TODO : SAVE시 DB 저장 , 세이브 버튼 클릭시 startActivity사용하기
+        //DB 수정
+        //finish()
+
     }
 
     /**
