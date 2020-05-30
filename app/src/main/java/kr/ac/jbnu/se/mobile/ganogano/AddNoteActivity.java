@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class AddNoteActivity extends AppCompatActivity {
         editor = sharedPref.edit();
 
         DcheckBox = findViewById(R.id.date_checkbox);
-        saveButton = findViewById(R.id.saveBtn);
+        saveButton = findViewById(R.id.backBtn);
         resultTxt = findViewById(R.id.D_DAY_BOX);
         // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
@@ -91,7 +93,7 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
         //세이브 버튼 클릭시 startActivity사용하기
-/*        saveButton.setOnClickListener(new View.OnClickListener() {
+       /* saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO : SAVE시 DB 저장
@@ -99,11 +101,17 @@ public class AddNoteActivity extends AppCompatActivity {
                 Do_Notification();
                 //finish()
             }
-        });*/
+        }); */
     }
+
+    //save 버튼 클릭 이벤트
     public void save(View o){
+        //TODO : SAVE시 DB 저장 , 세이브 버튼 클릭시 startActivity사용하기, snackbar 나중에 제거하기
+        //DB 수정
         Do_Notification();
+        //finish()
     }
+
     /**
      * D-day 반환
      */

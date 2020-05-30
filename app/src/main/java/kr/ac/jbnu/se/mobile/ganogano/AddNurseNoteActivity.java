@@ -12,27 +12,24 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+
 //TODO: 간호 노트 추가
 public class AddNurseNoteActivity extends AppCompatActivity {
 
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
-   // private Button save_btn = findViewById(R.id.saveBtn);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.note_nurse_revision_activity);
-
-      /*  save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Do_Notification();
-            }
-        }); */
-
     }
+    //save 버튼 클릭 이벤트
     public void save(View o){
+        //TODO : SAVE시 DB 저장 , 세이브 버튼 클릭시 startActivity사용하기, snackbar 나중에 제거하기
+        //DB 수정
         Do_Notification();
+        //finish()
     }
 
     public void Do_Notification() {
@@ -40,7 +37,7 @@ public class AddNurseNoteActivity extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_box_black_24dp)) //BitMap 이미지 요구
-                .setContentTitle("간호가노 상태창")
+                .setContentTitle("GANOGANO 상태창")
                 .setContentText("추가되었습니다")
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))

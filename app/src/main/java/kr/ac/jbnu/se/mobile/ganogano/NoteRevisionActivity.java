@@ -3,7 +3,6 @@ package kr.ac.jbnu.se.mobile.ganogano;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +10,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -59,7 +59,7 @@ public class NoteRevisionActivity extends AppCompatActivity {
         editor = sharedPref.edit();
 
         DcheckBox = findViewById(R.id.date_checkbox);
-        saveButton = findViewById(R.id.saveBtn);
+        saveButton = findViewById(R.id.backBtn);
         resultTxt = findViewById(R.id.D_DAY_BOX);
         // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
@@ -94,11 +94,13 @@ public class NoteRevisionActivity extends AppCompatActivity {
         });
 
     }
+    //save 버튼 클릭 이벤트
     public void save(View o){
-        //TODO : SAVE시 DB 저장 , 세이브 버튼 클릭시 startActivity사용하기
+        //TODO : SAVE시 DB 저장 , 세이브 버튼 클릭시 startActivity사용하기, snackbar 나중에 제거하기
         //DB 수정
+        Snackbar.make(o, "저장되었습니다.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
         //finish()
-
     }
 
     /**

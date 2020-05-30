@@ -108,34 +108,20 @@ public class NoteFirstFragment extends Fragment {
 //        adapter.notifyDataSetChanged();로 갑 변경을 알린다.
     private void prepareData() {
         // 초기 데이터 값, 추후 삭제할 것
-        List<String> listTitle = Arrays.asList("국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립",
-                "국화", "사막", "수국", "해파리", "코알라", "등대", "펭귄", "튤립");
+        List<String> listTitle = Arrays.asList("R hospital", "E hospital", "D hospital", "V hospital", "E hospital", "L hospital", "V hospital", "E hospital",
+                "T hospital");
         List<String> listContent = Arrays.asList(
-                "이 꽃은 국화입니다.",
-                "여기는 사막입니다.",
-                "이 꽃은 수국입니다.",
-                "이 동물은 해파리입니다.",
-                "이 동물은 코알라입니다.",
-                "이것은 등대입니다.",
-                "이 동물은 펭귄입니다.",
-                "이 꽃은 튤립입니다.",
-                "이 꽃은 국화입니다.",
-                "여기는 사막입니다.",
-                "이 꽃은 수국입니다.",
-                "이 동물은 해파리입니다.",
-                "이 동물은 코알라입니다.",
-                "이것은 등대입니다.",
-                "이 동물은 펭귄입니다.",
-                "이 꽃은 튤립입니다."
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01",
+                "200.01.01~200.01.01"
         );
         List<Integer> listResId = Arrays.asList( //이미지인데 굳이 안넣어도 됨
-                R.drawable.ic_check_box_black_24dp,
-                R.drawable.ic_add_black_24dp,
-                R.drawable.ic_check_box_black_24dp,
-                R.drawable.ic_check_box_black_24dp,
-                R.drawable.ic_check_box_black_24dp,
-                R.drawable.ic_check_box_black_24dp,
-                R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,
                 R.drawable.ic_check_box_black_24dp,
