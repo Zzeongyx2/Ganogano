@@ -3,4 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorViolet">#8977AD</color>
+    <color name="colorRV">#FFB69F</color>
+    <color name="colorBRV">#33FFB69F</color>
+    <color name="colorBRWhite">#4DFFFFFF</color>
 </resources>
