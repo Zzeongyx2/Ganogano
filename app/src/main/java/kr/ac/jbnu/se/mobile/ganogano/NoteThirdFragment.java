@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 // TODO : 간호술기 디테일뷰 출력하는 액티비티
 
+//세번째 프래그 먼트로 간호술기의 디테일 뷰를 출력하는 프래그먼트입니다
+
 public class NoteThirdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

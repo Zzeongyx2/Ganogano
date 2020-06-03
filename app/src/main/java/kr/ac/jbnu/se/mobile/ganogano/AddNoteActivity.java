@@ -37,7 +37,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private CheckBox DcheckBox;
     private TextView resultTxt;
     private Button saveButton;
-    final String day_format = "%d 년 %d 월 %d일"; //날자형식
+    final String day_format = "%d 년 %d 월 %d일"; //날짜형식입니다.
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
     // DatePicker 에서 날짜 선택 시 호출
@@ -46,7 +46,7 @@ public class AddNoteActivity extends AppCompatActivity {
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
             result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
-            resultTxt.setText(String.format(day_format, a_year, a_monthOfYear, a_dayOfMonth));
+            resultTxt.setText(String.format(day_format, a_year, a_monthOfYear, a_dayOfMonth));//날짜 형식대로 출력하겠다는 의미입니다
         }
     };
 

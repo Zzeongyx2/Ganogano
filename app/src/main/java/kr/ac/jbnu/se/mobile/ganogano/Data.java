@@ -1,6 +1,8 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 //TODO : 데이터베이스 TYPE과 맞추기
 
+//필요 시 데이터베이스의 정보를 가공하기 쉽게 따로 만들어 놓은 클래스
+//추후 구조를 변경
 public class Data {
 
     private String title;

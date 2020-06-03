@@ -24,18 +24,21 @@ import java.util.Arrays;
 import java.util.List;
 
 // TODO : 간호술기 리스트 출력하는 액티비티
+//두번째 프레그먼트로 간호술기의 목록을 출력하는 프래그먼트입니다.
+//첫번째 프레그먼트와 유사한 로직입니다.
 
 public class NoteSecondFragment extends Fragment {
-    //TODO : 리사이클 뷰 구현하기
     RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    ArrayList<Data> list = new ArrayList<>(); //혹시 모를 list
+    ArrayList<Data> list = new ArrayList<>(); //리스트에 보여질 내용을 담은 list 데이터베이스의 내용을 저장하고 있는 Data 클래스의 리스트
     FloatingActionButton fab; //플로팅버튼
 
     @Override //onCreateView 전에 호출
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prepareData();
+        prepareData();// 값 초기화
+
+        //첫번째 프래그먼트에서 넘겼던 번들의 내용을 가져옵니다.
         String msg = getArguments().getString("hospital_name"); //번들내용 가져오기
     }
 
@@ -101,7 +104,7 @@ public class NoteSecondFragment extends Fragment {
         });
     }
 
-    private void prepareData() {
+    private void prepareData() { //데이터 초기 값 설정
         // 초기 데이터 값
         List<String> listTitle = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
                 "O");

@@ -10,7 +10,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*프래그먼트들을 담을 Activity
+* Activity 는 틀 프래그먼트는 내용물 */
 public class NoteActivity extends AppCompatActivity {
     //  RecyclerView recyclerView;
     List<Data> list = new ArrayList<>();
@@ -18,7 +19,7 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.note_activity);
+        setContentView(R.layout.note_activity); //액티비티만 띄어준다
 //        recyclerView = findViewById(R.id.rv);//리사이클뷰
         // Toolbar toolbar = findViewById(R.id.toolbar);//툴바
         //setSupportActionBar(toolbar);//툴바지원
