@@ -42,7 +42,7 @@ public class NoteSecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.note_fragment_second, container, false);
-        recyclerView = rootView.findViewById(R.id.rv);//리사이클뷰
+        recyclerView = rootView.findViewById(R.id.patientcase_list_view);//리사이클뷰
         recyclerView.setHasFixedSize(true);
         adapter = new RecyclerAdapter(list); //값 넣기
         

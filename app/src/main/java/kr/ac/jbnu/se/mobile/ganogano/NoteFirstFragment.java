@@ -41,7 +41,7 @@ public class NoteFirstFragment extends Fragment {
     @Override //onCreate 호출 후 호출
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.note_fragment_first, container, false);
-        recyclerView = rootView.findViewById(R.id.rv);//recyclerView
+        recyclerView = rootView.findViewById(R.id.note_list_view);//recyclerView
         recyclerView.setHasFixedSize(true);
         adapter = new RecyclerAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
