@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FCF5EF"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".NoteThirdFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/sickness_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="병명"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/sickness"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/colorBRWhite"
+            android:hint="병명을 입력하세요."
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/prescription_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="처방  "
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/prescription"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@color/colorBRWhite"
+            android:gravity="center"
+            android:hint="처방을 입력하세요."
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/precautions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="주의사항"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/Precautions"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/colorBRWhite"
+            android:hint="주의사항을 입력하세요."
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/other_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="기타"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/other"
+            android:layout_width="300dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="기타사항을 입력하세요."
+            android:background="@color/colorBRWhite"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveCaseBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/colorRV"
+        android:text="SAVE"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp" />
+</LinearLayout>
