@@ -13,18 +13,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".memoActivity"/>
         <activity android:name=".MemoEditActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".PracticeActivity"/>
+        <activity android:name=".PracticeEditActivity"/>
+        <activity android:name=".PatientCaseActivity"/>
+        <activity android:name=".PatientCaseEditActivity"/>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="fullSensor">
-
         </activity>
 
         <activity
@@ -35,12 +37,6 @@
             android:name=".Settings"
             android:label="setting"
             android:screenOrientation="fullSensor" />
-
-        <activity android:name=".NoteActivity"/>
-        <activity android:name=".NoteRevisionActivity"/>
-        <activity android:name=".NoteNurseRevisionActivity"/>
-        <activity android:name=".AddNurseNoteActivity"/>
-        <activity android:name=".AddNoteActivity"/>
 
         <service
             android:name=".MusicService"

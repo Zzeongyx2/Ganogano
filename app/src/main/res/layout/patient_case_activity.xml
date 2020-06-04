@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FCF5EF"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".NoteThirdFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,8 +20,8 @@
             android:text="병명"
             android:textSize="17dp" />
 
-        <TextView
-            android:id="@+id/sickness"
+        <EditText
+            android:id="@+id/Sickness"
             android:layout_width="300dp"
             android:layout_height="120dp"
             android:layout_margin="15dp"
@@ -48,8 +46,8 @@
             android:text="처방  "
             android:textSize="17dp" />
 
-        <TextView
-            android:id="@+id/prescription"
+        <EditText
+            android:id="@+id/Prescription"
             android:layout_width="300dp"
             android:layout_height="120dp"
             android:layout_margin="15dp"
@@ -74,7 +72,7 @@
             android:text="주의사항"
             android:textSize="17dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/Precautions"
             android:layout_width="300dp"
             android:layout_height="120dp"
@@ -100,8 +98,8 @@
             android:text="기타"
             android:textSize="17dp" />
 
-        <TextView
-            android:id="@+id/other"
+        <EditText
+            android:id="@+id/Other"
             android:layout_width="300dp"
             android:layout_height="120dp"
             android:layout_margin="15dp"
@@ -112,13 +110,4 @@
             android:inputType="text" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/saveCaseBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/colorRV"
-        android:text="SAVE"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
 </LinearLayout>

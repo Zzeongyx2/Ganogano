@@ -51,7 +51,7 @@ public class memoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.memo_activity);
+        setContentView(R.layout.activity_list);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
@@ -66,7 +66,6 @@ public class memoActivity extends AppCompatActivity {
                 bundle.putString("key",memo.getKey());
                 bundle.putString("title",memo.getTitle());
                 bundle.putString("content", memo.getContent());
-                Log.d(TAG, "=============================================================================");
                 Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_NEW_MEMO);
@@ -146,8 +145,6 @@ public class memoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(TAG,"===================================================================="+ REQUEST_CODE_NEW_MEMO);
-
         if (requestCode == REQUEST_CODE_NEW_MEMO) {
             if (resultCode == RESULT_OK) {
                 String title = data.getStringExtra("title");
@@ -160,7 +157,7 @@ public class memoActivity extends AppCompatActivity {
                 database = mFirebaseDB.getReference("memo" + id);
                 memo.setKey(database.push().getKey());
                 database.push().setValue(memo);
-                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
                 memo.setKey(key);
             }
             else {

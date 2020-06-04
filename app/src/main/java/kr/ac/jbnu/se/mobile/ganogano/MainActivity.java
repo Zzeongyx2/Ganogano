@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 soundPool.play(soundID, vol, vol, 0, 0, 0);
-                Intent I = new Intent(MainActivity.this, NoteActivity.class);
+                Intent I = new Intent(MainActivity.this, PracticeActivity.class);
                 startActivity(I);
 
             }
