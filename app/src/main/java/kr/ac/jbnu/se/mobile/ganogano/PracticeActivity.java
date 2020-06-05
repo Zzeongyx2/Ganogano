@@ -31,7 +31,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PracticeActivity extends AppCompatActivity {
 
@@ -44,9 +46,13 @@ public class PracticeActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
-    private List<Practice> mPracticeList = new ArrayList<>();;
+    SharedPreferences sf; //이미 저장된 값 가져오기
+
+    private List<Practice> mPracticeList = new ArrayList<>();
+    ;
     private PracticeAdapter mAdapter;
     private ListView mPracticeListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +64,6 @@ public class PracticeActivity extends AppCompatActivity {
 
         mPracticeListView = (ListView) findViewById(R.id.memo_list);
 
-        mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Practice practice = mPracticeList.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("parentKey", practice.getKey());
-                Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
-                I.putExtras(bundle);
-                startActivity(I);
-            }
-        });
-
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -79,10 +73,11 @@ public class PracticeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
+                            sf = getSharedPreferences("settings", MODE_PRIVATE);
                             Practice practice = mPracticeList.get(position);
                             Bundle bundle = new Bundle();
-                            bundle.putString("key",practice.getKey());
-                            bundle.putString("period",practice.getPeriod());
+                            bundle.putString("key", practice.getKey());
+                            bundle.putString("period", practice.getPeriod());
                             bundle.putString("hospital", practice.getHospital());
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
@@ -90,18 +85,31 @@ public class PracticeActivity extends AppCompatActivity {
                             mPracticeList.remove(position);
                             mAdapter.notifyDataSetChanged();
                             String key = practice.getKey();
-                            mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(key).removeValue();
+                            mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key).child("hospital").removeValue();
+                            mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key).child("period").removeValue();
                         } else {
                             Practice practice = mPracticeList.get(position);
                             mPracticeList.remove(position);
                             mAdapter.notifyDataSetChanged();
                             String key = practice.getKey();
-                            mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(key).removeValue();
+                            mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key).removeValue();
                         }
                     }
                 });
                 builder.show();
                 return false;
+            }
+        });
+
+        mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Practice practice = mPracticeList.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("parentKey", practice.getKey());
+                Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
+                I.putExtras(bundle);
+                startActivity(I);
             }
         });
 
@@ -123,7 +131,7 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     private void initDatabase() {
-        database = FirebaseDatabase.getInstance().getReference("practice"+mFirebaseAuth.getUid());
+        database = FirebaseDatabase.getInstance().getReference("practice" + mFirebaseAuth.getUid());
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -176,9 +184,8 @@ public class PracticeActivity extends AppCompatActivity {
                 practice.setKey(database.push().getKey());
                 database.push().setValue(practice);
 //                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
-                practice.setKey(key);
-            }
-            else {
+//                practice.setKey(key);
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

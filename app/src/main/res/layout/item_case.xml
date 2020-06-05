@@ -8,6 +8,7 @@
         android:id="@+id/sickness_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textSize="15sp"
         android:textColor="@android:color/black"
         android:textStyle="bold"/>
@@ -16,12 +17,14 @@
         android:id="@+id/prescription_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textSize="13sp"
         android:textColor="@android:color/darker_gray"/>
     <TextView
         android:textSize="13sp"
         android:textColor="@android:color/darker_gray"
         android:id="@+id/precaution_text"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -29,6 +32,7 @@
         android:textSize="13sp"
         android:textColor="@android:color/darker_gray"
         android:id="@+id/etc_text"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -144,7 +144,6 @@ public class memoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_CODE_NEW_MEMO) {
             if (resultCode == RESULT_OK) {
                 String title = data.getStringExtra("title");

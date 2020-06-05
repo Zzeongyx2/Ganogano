@@ -17,6 +17,10 @@ public class Practice{
         this.key = key;
     }
 
+    public Practice(String period, String hospital){
+        this.period = period;
+        this.hospital = hospital;
+    }
 
     public String getKey() {
         return key;

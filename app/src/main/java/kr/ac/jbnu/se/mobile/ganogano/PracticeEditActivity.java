@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,12 +40,16 @@ public class PracticeEditActivity extends AppCompatActivity {
     private final int ONE_DAY = 24 * 60 * 60 * 1000;
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
+    SharedPreferences sharedPref = null;
+    SharedPreferences.Editor editor = null;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
-    private String key = null;
-    private String period, hospital;
+    private String key;
+    private String period, hospital, dday;
+    private CheckBox DcheckBox;
 
     private Calendar mCalendar;
     private String result = null;
@@ -66,22 +71,21 @@ public class PracticeEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practiceedit);
 
+        sharedPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
 
         mPeriodEditText = (TextView) findViewById(R.id.period_edit);
         mHospitalEditText = (EditText) findViewById(R.id.hospital_edit);
+        DcheckBox = findViewById(R.id.date_checkbox);
 
         Bundle bundle = getIntent().getExtras();
 
         key = bundle.getString("key");
         period = bundle.getString("title");
         hospital = bundle.getString("content");
-
-        if (key != null) {
-            mPeriodEditText.setText(period);
-            mHospitalEditText.setText(hospital);
-        }
 
         // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
@@ -99,6 +103,18 @@ public class PracticeEditActivity extends AppCompatActivity {
 
                 DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, mDateSetListener, year, month, day);
                 dialog.show();
+            }
+        });
+
+        DcheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DcheckBox.isChecked() == true) {
+                    editor.putString("D_DAY", result);
+                } else {
+                    editor.putString("D_DAY", "날짜가 설정되지 않았습니다");
+                }
+                editor.commit();
             }
         });
     }
@@ -145,7 +161,6 @@ public class PracticeEditActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
-
 
     private void cancel(){
         setResult(RESULT_CANCELED);
