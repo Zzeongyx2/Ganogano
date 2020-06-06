@@ -1,17 +1,11 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.FragmentActivity;
 
 import java.util.List;
 
@@ -47,8 +41,8 @@ class MemoAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.item_memo, null);
 
             ViewHolder holder = new ViewHolder();
-            holder.titleTextView = (TextView)view.findViewById(R.id.title_text);
-            holder.contentTextView = (TextView)view.findViewById(R.id.content_text);
+            holder.titleTextView = (TextView) view.findViewById(R.id.title_text);
+            holder.contentTextView = (TextView) view.findViewById(R.id.content_text);
 
             view.setTag(holder);
         }
@@ -56,7 +50,7 @@ class MemoAdapter extends BaseAdapter {
 
         Memo inputMemo = mData.get(position);
         if (inputMemo != null) {
-            ViewHolder holder = (ViewHolder)view.getTag();
+            ViewHolder holder = (ViewHolder) view.getTag();
             holder.titleTextView.setText(inputMemo.getTitle());
             holder.contentTextView.setText(inputMemo.getContent());
         }
@@ -66,6 +60,25 @@ class MemoAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView titleTextView;
         TextView contentTextView;
+    }
+
+    private OnItemClickListener mListener = null;
+    private AdapterView.OnItemLongClickListener lListener = null;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnItemLongClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemLongClickListener(OnItemClickListener listener) {
+        this.lListener = (AdapterView.OnItemLongClickListener) listener;
     }
 
 }

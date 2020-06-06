@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnMemo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 soundPool.play(soundID, vol, vol, 0, 0, 0);
-                Intent I = new Intent(MainActivity.this, memoActivity.class);
+                Intent I = new Intent(MainActivity.this, MemoActivity.class);
                 startActivity(I);
             }
         });
