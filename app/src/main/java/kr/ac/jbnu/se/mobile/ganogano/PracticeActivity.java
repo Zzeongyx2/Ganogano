@@ -64,6 +64,18 @@ public class PracticeActivity extends AppCompatActivity {
 
         mPracticeListView = (ListView) findViewById(R.id.memo_list);
 
+        mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Practice practice = mPracticeList.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("parentKey", practice.getKey());
+                Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
+                I.putExtras(bundle);
+                startActivity(I);
+            }
+        });
+
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -97,21 +109,10 @@ public class PracticeActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
-                return false;
+                return true;
             }
         });
 
-        mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Practice practice = mPracticeList.get(position);
-                Bundle bundle = new Bundle();
-                bundle.putString("parentKey", practice.getKey());
-                Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
-                I.putExtras(bundle);
-                startActivity(I);
-            }
-        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

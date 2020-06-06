@@ -43,7 +43,6 @@ class MemoAdapter extends BaseAdapter {
             ViewHolder holder = new ViewHolder();
             holder.titleTextView = (TextView) view.findViewById(R.id.title_text);
             holder.contentTextView = (TextView) view.findViewById(R.id.content_text);
-
             view.setTag(holder);
         }
 
@@ -60,25 +59,6 @@ class MemoAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView titleTextView;
         TextView contentTextView;
-    }
-
-    private OnItemClickListener mListener = null;
-    private AdapterView.OnItemLongClickListener lListener = null;
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener;
-    }
-
-    public interface OnItemLongClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemLongClickListener(OnItemClickListener listener) {
-        this.lListener = (AdapterView.OnItemLongClickListener) listener;
     }
 
 }

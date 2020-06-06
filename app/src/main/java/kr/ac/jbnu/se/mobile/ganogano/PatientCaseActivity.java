@@ -86,14 +86,33 @@ public class PatientCaseActivity extends AppCompatActivity {
         mPatientCaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                PatientCase patientCase = mPatientCaseList.get(position);
-                mPatientCaseList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                String key = patientCase.getKey();
-                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
-                return false;
+                final int pos = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("주의")
+                        .setMessage("정말 삭제하시겠습니까?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                PatientCase patientCase = mPatientCaseList.get(pos);
+                                mPatientCaseList.remove(pos);
+                                mAdapter.notifyDataSetChanged();
+                                String key = patientCase.getKey();
+                                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+                return true;
             }
+
         });
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
