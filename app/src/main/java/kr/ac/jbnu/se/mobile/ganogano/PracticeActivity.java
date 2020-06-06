@@ -32,8 +32,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class PracticeActivity extends AppCompatActivity {
 
@@ -49,9 +51,12 @@ public class PracticeActivity extends AppCompatActivity {
 
     SharedPreferences sf; //이미 저장된 값 가져오기
 
+    private static HashMap<Integer, String> practiceListMapper = new HashMap<Integer, String>();
     private List<Practice> mPracticeList = new ArrayList<>();
-    ;
-    private PracticeAdapter mAdapter;
+
+    private static PracticeAdapter mAdapter;
+    private static int practiceNum = 0;
+
     private ListView mPracticeListView;
 
 
@@ -68,7 +73,6 @@ public class PracticeActivity extends AppCompatActivity {
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                Log.d(TAG, "===================================LongCLicked");
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("원하는 작업을 선택해 주세요");
                 builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
@@ -76,6 +80,7 @@ public class PracticeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
                             sf = getSharedPreferences("settings", MODE_PRIVATE);
+                            practiceNum = position;
                             Practice practice = mPracticeList.get(position);
                             Bundle bundle = new Bundle();
                             bundle.putString("key", practice.getKey());
@@ -84,7 +89,6 @@ public class PracticeActivity extends AppCompatActivity {
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
                             startActivityForResult(intent, REQUEST_CODE_RENEW_PRACTICE);
-//                            String key = practice.getKey();
                         } else {
                             Practice practice = mPracticeList.get(position);
                             mPracticeList.remove(position);
@@ -95,9 +99,10 @@ public class PracticeActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
-                return false;
+                return true;
             }
         });
+
 
         mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,11 +142,19 @@ public class PracticeActivity extends AppCompatActivity {
                 Practice practice = dataSnapshot.getValue(Practice.class);
                 practice.setKey(dataSnapshot.getKey());
                 mPracticeList.add(practice);
+                practiceListMapper.put(practiceNum, dataSnapshot.getKey());
+
                 mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Practice practice = dataSnapshot.getValue(Practice.class);
+                practice.setKey(dataSnapshot.getKey());
+
+                mPracticeList.remove(practiceNum);
+                mPracticeList.add(practiceNum, practice);
+
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -186,18 +199,24 @@ public class PracticeActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
-        }if(requestCode == REQUEST_CODE_RENEW_PRACTICE) {
+        } if (requestCode == REQUEST_CODE_RENEW_PRACTICE) {
             if (resultCode == RESULT_OK) {
                 String key = data.getStringExtra("key");
                 String period = data.getStringExtra("period");
                 String hospital = data.getStringExtra("hospital");
+
+                for (Map.Entry<Integer, String> entry : practiceListMapper.entrySet()) {
+                    if (entry.getValue().equals(key)) {
+                        practiceNum = entry.getKey();
+                    }
+                }
                 database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key);
                 Map<String, Object> renew = new HashMap<String, Object>();
                 renew.put("period", period);
                 renew.put("hospital", hospital);
                 database.updateChildren(renew);
-                mAdapter.notifyDataSetChanged();
-            }else{
+
+            } else{
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

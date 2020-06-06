@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.Menu;
@@ -47,9 +48,12 @@ public class memoActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
+    private static HashMap<Integer, String> memoListMapper = new HashMap<Integer, String>();
+
     private List<Memo> mMemoList = new ArrayList<>();;
     private MemoAdapter mAdapter;
     private ListView mMemoListView;
+    private static int memoNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class memoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Memo memo = mMemoList.get(position);
+                memoNum = position;
                 Bundle bundle = new Bundle();
                 bundle.putString("key",memo.getKey());
                 bundle.putString("title",memo.getTitle());
@@ -77,13 +82,30 @@ public class memoActivity extends AppCompatActivity {
         mMemoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Memo memo = mMemoList.get(position);
-                mMemoList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                String key = memo.getKey();
-                mFirebaseDB.getReference("memo"+ mFirebaseAuth.getUid()).child(key).removeValue();
-                return false;
+                final int pos = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("주의")
+                        .setMessage("정말 삭제하시겠습니까?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Memo memo = mMemoList.get(pos);
+                                mMemoList.remove(pos);
+                                mAdapter.notifyDataSetChanged();
+                                String key = memo.getKey();
+                                mFirebaseDB.getReference("memo" + mFirebaseAuth.getUid()).child(key).removeValue();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+                return true;
             }
+
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -111,11 +133,19 @@ public class memoActivity extends AppCompatActivity {
                Memo memo = dataSnapshot.getValue(Memo.class);
                memo.setKey(dataSnapshot.getKey());
                mMemoList.add(memo);
+               memoListMapper.put(memoNum, dataSnapshot.getKey());
                mAdapter.notifyDataSetChanged();
            }
 
            @Override
            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+               Memo memo = dataSnapshot.getValue(Memo.class);
+               memo.setKey(dataSnapshot.getKey());
+
+               mMemoList.remove(memoNum);
+               mMemoList.add(memoNum, memo);
+
+               mAdapter.notifyDataSetChanged();
            }
 
            @Override

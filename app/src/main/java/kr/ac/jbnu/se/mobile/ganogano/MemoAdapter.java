@@ -23,6 +23,11 @@ class MemoAdapter extends BaseAdapter {
         mData = memoList;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
 
     @Override
     public int getCount() {

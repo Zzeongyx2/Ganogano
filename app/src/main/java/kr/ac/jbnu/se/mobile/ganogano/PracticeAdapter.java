@@ -1,5 +1,6 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,16 @@ import android.widget.TextView;
 import java.util.List;
 
 public class PracticeAdapter extends BaseAdapter {
-    private final List<Practice> mData;
-
+    private List<Practice> mData;
 
     public PracticeAdapter(List<Practice> practiceList) {
         mData = practiceList;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {

@@ -47,6 +47,9 @@ public class PatientCaseActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
+    private static HashMap<Integer, String> caseListMapper = new HashMap<Integer, String>();
+    private static int caseNum = 0;
+
     private List<PatientCase> mPatientCaseList = new ArrayList<>();;
     private PatientCaseAdapter mAdapter;
     private ListView mPatientCaseListView;
@@ -78,19 +81,37 @@ public class PatientCaseActivity extends AppCompatActivity {
                 bundle.putString("etc", patientCase.getEtc());
                 Intent intent = new Intent(PatientCaseActivity.this, PatientCaseEditActivity.class);
                 intent.putExtras(bundle);
+                caseNum = position;
                 startActivityForResult(intent, REQUEST_CODE_RENEW_CASE);
             }
         });
         mPatientCaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                PatientCase patientCase = mPatientCaseList.get(position);
-                mPatientCaseList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                String key = patientCase.getKey();
-                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
-                return false;
+                final int pos = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("주의")
+                        .setMessage("정말 삭제하시겠습니까?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                PatientCase patientCase = mPatientCaseList.get(pos);
+                                mPatientCaseList.remove(pos);
+                                mAdapter.notifyDataSetChanged();
+                                String key = patientCase.getKey();
+                                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+                return true;
             }
+
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -118,11 +139,19 @@ public class PatientCaseActivity extends AppCompatActivity {
                 PatientCase patientCase = dataSnapshot.getValue(PatientCase.class);
                 patientCase.setKey(dataSnapshot.getKey());
                 mPatientCaseList.add(patientCase);
+                caseListMapper.put(caseNum, dataSnapshot.getKey());
                 mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                PatientCase patientCase = dataSnapshot.getValue(PatientCase.class);
+                patientCase.setKey(dataSnapshot.getKey());
+
+                mPatientCaseList.remove(caseNum);
+                mPatientCaseList.add(caseNum, patientCase);
+
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -167,7 +196,6 @@ public class PatientCaseActivity extends AppCompatActivity {
                 database = mFirebaseDB.getReference("practice" + id).child(parentKey).child("case");
                 patientCase.setKey(database.push().getKey());
                 database.push().setValue(patientCase);
-//                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
                 patientCase.setKey(key);
             }
             else {

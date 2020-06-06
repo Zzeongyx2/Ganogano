@@ -1,5 +1,6 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,12 @@ public class PatientCaseAdapter extends BaseAdapter {
         mData = patientCaseList;
     }
 
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+    }
 
     @Override
     public int getCount() {
