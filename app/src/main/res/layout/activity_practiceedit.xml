@@ -20,15 +20,28 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/period_edit"
-            android:layout_width="match_parent"
+            android:id="@+id/period_edit_start"
+            android:layout_width="130dp"
             android:layout_height="42dp"
             android:layout_margin="15dp"
             android:background="@color/colorBRWhite"
-            android:hint="클릭하세요"
+            android:hint="시작일"
             android:gravity="center"
             android:inputType="date"
             android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/period_edit_end"
+            android:layout_width="130dp"
+            android:layout_height="42dp"
+            android:layout_margin="15dp"
+            android:background="@color/colorBRWhite"
+            android:hint="종료일"
+            android:gravity="center"
+            android:inputType="date"
+            android:textSize="15dp" />
+
+
     </LinearLayout>
 
     <LinearLayout

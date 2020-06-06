@@ -34,7 +34,7 @@ import java.util.Locale;
 
 public class PracticeEditActivity extends AppCompatActivity {
 
-    private TextView mPeriodEditText;
+    private TextView APeriodEditText, BPeriodEditText;
     private EditText mHospitalEditText;
 
     private final int ONE_DAY = 24 * 60 * 60 * 1000;
@@ -48,20 +48,30 @@ public class PracticeEditActivity extends AppCompatActivity {
     private DatabaseReference database;
 
     private String key;
-    private String period, hospital, dday;
+    private String period, hospital;
     private CheckBox DcheckBox;
 
-    private Calendar mCalendar;
+    private Calendar ACalendar, mCalendar;
     private String result = null;
-    final String dayformat = "%d 년 %d 월 %d일"; //날자형식
+    final String dayformat = "%d 년 %d 월 %d일"; //날자형태
+
+    //datePicker가 두개
 
     // DatePicker 에서 날짜 선택 시 호출
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener BDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
-            result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
-            mPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear, a_dayOfMonth));
+            result = getDday(a_year, a_monthOfYear, a_dayOfMonth); // 디데이 계산 메인화면에 반영
+            BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth)); //왜 날짜가 한달이 늦게 나오지?
+
+        }
+    };
+    // DatePicker 에서 날짜 선택 시 호출
+    private DatePickerDialog.OnDateSetListener ADateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
+            APeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth));
         }
     };
 
@@ -77,7 +87,9 @@ public class PracticeEditActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
 
-        mPeriodEditText = (TextView) findViewById(R.id.period_edit);
+        BPeriodEditText = (TextView) findViewById(R.id.period_edit_end);
+        APeriodEditText = (TextView) findViewById(R.id.period_edit_start);
+
         mHospitalEditText = (EditText) findViewById(R.id.hospital_edit);
         DcheckBox = findViewById(R.id.date_checkbox);
 
@@ -94,14 +106,28 @@ public class PracticeEditActivity extends AppCompatActivity {
         mCalendar = new GregorianCalendar();
 
         // Input date click 시 date picker 호출
-        mPeriodEditText.setOnClickListener(new View.OnClickListener() {
+        BPeriodEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View a_view) {
                 final int year = mCalendar.get(Calendar.YEAR);
                 final int month = mCalendar.get(Calendar.MONTH);
                 final int day = mCalendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, mDateSetListener, year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, BDateSetListener, year, month, day);
+
+                dialog.show();
+            }
+        });
+
+        // Input date click 시 date picker 호출
+        APeriodEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View a_view) {
+                final int year = mCalendar.get(Calendar.YEAR);
+                final int month = mCalendar.get(Calendar.MONTH);
+                final int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, ADateSetListener, year, month, day);
                 dialog.show();
             }
         });
@@ -128,7 +154,7 @@ public class PracticeEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(key == null) {
+        if (key == null) {
             switch (item.getItemId()) {
                 case R.id.action_cancel:
                     cancel();
@@ -139,7 +165,7 @@ public class PracticeEditActivity extends AppCompatActivity {
                 default:
                     return super.onOptionsItemSelected(item);
             }
-        }else{
+        } else {
             switch (item.getItemId()) {
                 case R.id.action_cancel:
                     renew();
@@ -162,15 +188,16 @@ public class PracticeEditActivity extends AppCompatActivity {
         finish();
     }
 
-    private void cancel(){
+    private void cancel() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
-    private void save(){ ;
+    private void save() {
+        ;
         Do_Notification("저장되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("period", mPeriodEditText.getText().toString());
+        intent.putExtra("period", APeriodEditText.getText().toString()+" ~ "+BPeriodEditText.getText().toString());
         intent.putExtra("hospital", mHospitalEditText.getText().toString());
         setResult(RESULT_OK, intent);
         finish();

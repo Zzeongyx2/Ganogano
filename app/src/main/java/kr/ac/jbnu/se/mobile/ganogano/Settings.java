@@ -33,7 +33,7 @@ public class Settings extends Activity {
 
         //==================배경음악==============//
         if (mp == null) {
-            mp = MediaPlayer.create(this, R.raw.background);
+            mp = MediaPlayer.create(this, R.raw.background2);
             mp.setLooping(true);
         }
     }
