@@ -31,7 +31,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
 
@@ -39,6 +41,7 @@ public class memoActivity extends AppCompatActivity {
 
     private static final String TAG = memoActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_MEMO = 1000;
+    private static final int REQUEST_CODE_RENEW_MEMO = 2000;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDB;
@@ -68,11 +71,7 @@ public class memoActivity extends AppCompatActivity {
                 bundle.putString("content", memo.getContent());
                 Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
-                startActivityForResult(intent, REQUEST_CODE_NEW_MEMO);
-                mMemoList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                String key = memo.getKey();
-                mFirebaseDB.getReference("memo"+ mFirebaseAuth.getUid()).child(key).removeValue();
+                startActivityForResult(intent, REQUEST_CODE_RENEW_MEMO);
             }
         });
         mMemoListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -160,6 +159,20 @@ public class memoActivity extends AppCompatActivity {
                 memo.setKey(key);
             }
             else {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        }if(requestCode == REQUEST_CODE_RENEW_MEMO) {
+            if (resultCode == RESULT_OK) {
+                String key = data.getStringExtra("key");
+                String title = data.getStringExtra("title");
+                String content = data.getStringExtra("content");
+                database = mFirebaseDB.getReference("memo" + mFirebaseAuth.getUid()).child(key);
+                Map<String, Object> renew = new HashMap<String, Object>();
+                renew.put("title", title);
+                renew.put("content", content);
+                database.updateChildren(renew);
+                mAdapter.notifyDataSetChanged();
+            }else{
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }
