@@ -66,4 +66,6 @@ public class PatientCaseAdapter extends BaseAdapter {
         TextView precautionTextView;
         TextView etcTextView;
     }
+    //TODO : 인터페이스
+
 }

@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class PracticeAdapter extends BaseAdapter {
@@ -59,4 +58,5 @@ public class PracticeAdapter extends BaseAdapter {
         TextView periodTextView;
         TextView hospitalTextView;
     }
+    
 }

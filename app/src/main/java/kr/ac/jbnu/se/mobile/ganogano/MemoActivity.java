@@ -35,16 +35,16 @@ import java.util.List;
 
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
 
-public class memoActivity extends AppCompatActivity {
+public class MemoActivity extends AppCompatActivity {
 
-    private static final String TAG = memoActivity.class.getSimpleName();
+    private static final String TAG = MemoActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_MEMO = 1000;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
-    private List<Memo> mMemoList = new ArrayList<>();;
+    private List<Memo> mMemoList;
     private MemoAdapter mAdapter;
     private ListView mMemoListView;
 
@@ -57,6 +57,7 @@ public class memoActivity extends AppCompatActivity {
         mFirebaseDB = FirebaseDatabase.getInstance();
 
         mMemoListView = (ListView) findViewById(R.id.memo_list);
+        mMemoList = new ArrayList<>();
 
         mMemoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,7 +67,7 @@ public class memoActivity extends AppCompatActivity {
                 bundle.putString("key",memo.getKey());
                 bundle.putString("title",memo.getTitle());
                 bundle.putString("content", memo.getContent());
-                Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
+                Intent intent = new Intent(MemoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_NEW_MEMO);
                 mMemoList.remove(position);
@@ -93,7 +94,7 @@ public class memoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("key", null);
-                Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
+                Intent intent = new Intent(MemoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_NEW_MEMO);
             }

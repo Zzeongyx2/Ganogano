@@ -82,6 +82,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                 mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
             }
         });
+
         mPatientCaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
