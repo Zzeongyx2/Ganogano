@@ -67,4 +67,5 @@ class MemoAdapter extends BaseAdapter {
         TextView titleTextView;
         TextView contentTextView;
     }
+
 }
