@@ -31,7 +31,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
 
@@ -39,6 +41,7 @@ public class PatientCaseActivity extends AppCompatActivity {
 
     private static final String TAG = PatientCaseActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_CASE = 1000;
+    private static final int REQUEST_CODE_RENEW_CASE = 2000;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDB;
@@ -75,11 +78,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                 bundle.putString("etc", patientCase.getEtc());
                 Intent intent = new Intent(PatientCaseActivity.this, PatientCaseEditActivity.class);
                 intent.putExtras(bundle);
-                startActivityForResult(intent, REQUEST_CODE_NEW_CASE);
-                mPatientCaseList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                String key = patientCase.getKey();
-                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
+                startActivityForResult(intent, REQUEST_CODE_RENEW_CASE);
             }
         });
         mPatientCaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -172,6 +171,24 @@ public class PatientCaseActivity extends AppCompatActivity {
                 patientCase.setKey(key);
             }
             else {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        }if(requestCode == REQUEST_CODE_RENEW_CASE) {
+            if (resultCode == RESULT_OK) {
+                String sickness = data.getStringExtra("sickness");
+                String prescription = data.getStringExtra("prescription");
+                String precaution = data.getStringExtra("precaution");
+                String etc = data.getStringExtra("etc");
+                String key = data.getStringExtra("key");
+                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child("case").child(key);
+                Map<String, Object> renew = new HashMap<String, Object>();
+                renew.put("sickness", sickness);
+                renew.put("prescription", prescription);
+                renew.put("precaution", precaution);
+                renew.put("etc", etc);
+                database.updateChildren(renew);
+                mAdapter.notifyDataSetChanged();
+            }else{
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

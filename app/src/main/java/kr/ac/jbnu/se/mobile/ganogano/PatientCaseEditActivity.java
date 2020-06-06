@@ -79,10 +79,10 @@ public class PatientCaseEditActivity extends AppCompatActivity {
         }else{
             switch (item.getItemId()) {
                 case R.id.action_cancel:
-                    renew();
+                    cancel();
                     return true;
                 case R.id.action_save:
-                    save();
+                    renew();
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -97,10 +97,11 @@ public class PatientCaseEditActivity extends AppCompatActivity {
     private void renew() {
         Do_Notification("수정되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("sickness", sickness);
-        intent.putExtra("prescription",prescription);
-        intent.putExtra("precaution", precaution);
-        intent.putExtra("etc", etc);
+        intent.putExtra("key",key);
+        intent.putExtra("sickness", mSicknessEditText.getText().toString());
+        intent.putExtra("prescription", mPrescriptionEditText.getText().toString());
+        intent.putExtra("precaution", mPrecautionEditText.getText().toString());
+        intent.putExtra("etc", mEtcEditText.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

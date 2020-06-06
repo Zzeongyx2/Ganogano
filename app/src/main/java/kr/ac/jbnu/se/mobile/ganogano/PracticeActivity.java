@@ -39,8 +39,9 @@ public class PracticeActivity extends AppCompatActivity {
 
     //content_memo랑 menu_memoedit 이름 변경해서 재사용
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = PracticeActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_PRACTICE = 1000;
+    public static final int REQUEST_CODE_RENEW_PRACTICE = 2000;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDB;
@@ -67,6 +68,7 @@ public class PracticeActivity extends AppCompatActivity {
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.d(TAG, "===================================LongCLicked");
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("원하는 작업을 선택해 주세요");
                 builder.setItems(R.array.LAN, new DialogInterface.OnClickListener() {
@@ -81,12 +83,8 @@ public class PracticeActivity extends AppCompatActivity {
                             bundle.putString("hospital", practice.getHospital());
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
-                            startActivityForResult(intent, REQUEST_CODE_NEW_PRACTICE);
-                            mPracticeList.remove(position);
-                            mAdapter.notifyDataSetChanged();
-                            String key = practice.getKey();
-                            mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key).child("hospital").removeValue();
-                            mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key).child("period").removeValue();
+                            startActivityForResult(intent, REQUEST_CODE_RENEW_PRACTICE);
+//                            String key = practice.getKey();
                         } else {
                             Practice practice = mPracticeList.get(position);
                             mPracticeList.remove(position);
@@ -104,6 +102,7 @@ public class PracticeActivity extends AppCompatActivity {
         mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "===================================================== clicked");
                 Practice practice = mPracticeList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("parentKey", practice.getKey());
@@ -143,6 +142,7 @@ public class PracticeActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -168,24 +168,36 @@ public class PracticeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_NEW_PRACTICE) {
             if (resultCode == RESULT_OK) {
                 String period = data.getStringExtra("period");
                 String hospital = data.getStringExtra("hospital");
-                String key = data.getStringExtra("key");
-                Practice practice = new Practice(period, hospital, key);
+                String newkey = data.getStringExtra("key");
+                Practice practice = new Practice(period, hospital, newkey);
                 practice.setPeriod(period);
                 practice.setHospital(hospital);
                 String id = mFirebaseAuth.getUid();
                 database = mFirebaseDB.getReference("practice" + id);
                 practice.setKey(database.push().getKey());
                 database.push().setValue(practice);
-//                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
-//                practice.setKey(key);
             } else {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        }if(requestCode == REQUEST_CODE_RENEW_PRACTICE) {
+            if (resultCode == RESULT_OK) {
+                String key = data.getStringExtra("key");
+                String period = data.getStringExtra("period");
+                String hospital = data.getStringExtra("hospital");
+                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key);
+                Map<String, Object> renew = new HashMap<String, Object>();
+                renew.put("period", period);
+                renew.put("hospital", hospital);
+                database.updateChildren(renew);
+                mAdapter.notifyDataSetChanged();
+            }else{
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

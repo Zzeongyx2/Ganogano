@@ -85,10 +85,10 @@ public class MemoEditActivity extends AppCompatActivity {
         }else{
             switch (item.getItemId()) {
                 case R.id.action_cancel:
-                    renew();
+                    cancel();
                     return true;
                 case R.id.action_save:
-                    save();
+                    renew();
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -100,8 +100,9 @@ public class MemoEditActivity extends AppCompatActivity {
     private void renew() {
         Do_Notification("수정되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("title", title);
-        intent.putExtra("content", content);
+        intent.putExtra("key",key);
+        intent.putExtra("title", mTitleEditText.getText().toString());
+        intent.putExtra("content", mContentEditText.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

@@ -84,8 +84,13 @@ public class PracticeEditActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         key = bundle.getString("key");
-        period = bundle.getString("title");
-        hospital = bundle.getString("content");
+        period = bundle.getString("period");
+        hospital = bundle.getString("hospital");
+
+        if (key != null) {
+            mPeriodEditText.setText(period);
+            mHospitalEditText.setText(hospital);
+        }
 
         // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
@@ -142,10 +147,10 @@ public class PracticeEditActivity extends AppCompatActivity {
         }else{
             switch (item.getItemId()) {
                 case R.id.action_cancel:
-                    renew();
+                    cancel();
                     return true;
                 case R.id.action_save:
-                    save();
+                    renew();
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -156,8 +161,9 @@ public class PracticeEditActivity extends AppCompatActivity {
     private void renew() {
         Do_Notification("수정되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("period", period);
-        intent.putExtra("hospital", hospital);
+        intent.putExtra("period", mPeriodEditText.getText().toString());
+        intent.putExtra("hospital", mHospitalEditText.getText().toString());
+        intent.putExtra("key", key);
         setResult(RESULT_OK, intent);
         finish();
     }
