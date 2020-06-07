@@ -107,8 +107,8 @@ public class PracticeActivity extends AppCompatActivity {
         mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "===================================================== clicked");
                 Practice practice = mPracticeList.get(position);
+                practiceNum = position;
                 Bundle bundle = new Bundle();
                 bundle.putString("parentKey", practice.getKey());
                 Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
@@ -142,8 +142,6 @@ public class PracticeActivity extends AppCompatActivity {
                 Practice practice = dataSnapshot.getValue(Practice.class);
                 practice.setKey(dataSnapshot.getKey());
                 mPracticeList.add(practice);
-                practiceListMapper.put(practiceNum, dataSnapshot.getKey());
-
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -151,10 +149,8 @@ public class PracticeActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Practice practice = dataSnapshot.getValue(Practice.class);
                 practice.setKey(dataSnapshot.getKey());
-
                 mPracticeList.remove(practiceNum);
                 mPracticeList.add(practiceNum, practice);
-
                 mAdapter.notifyDataSetChanged();
             }
 
