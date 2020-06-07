@@ -6,7 +6,9 @@ public class Practice{
     private String hospital;
     private String key;
 
+    public Practice(){
 
+    }
 
     public Practice(String aperiod, String bperiod, String hospital, String key){
         this.aperiod = aperiod;

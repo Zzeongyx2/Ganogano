@@ -61,6 +61,7 @@ public class PatientCaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
         Bundle b = getIntent().getExtras();
         parentKey = b.getString("parentKey");
 
@@ -208,7 +209,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                 String precaution = data.getStringExtra("precaution");
                 String etc = data.getStringExtra("etc");
                 String key = data.getStringExtra("key");
-                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child("case").child(key);
+                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(parentKey).child("case").child(key);
                 Map<String, Object> renew = new HashMap<String, Object>();
                 renew.put("sickness", sickness);
                 renew.put("prescription", prescription);

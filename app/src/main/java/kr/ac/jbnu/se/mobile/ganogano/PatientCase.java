@@ -8,6 +8,10 @@ public class PatientCase{
     private String etc;
     private String key;
 
+    public PatientCase(){
+
+    }
+
 
     public PatientCase(String sickness, String prescription, String precaution, String etc, String key){
         this.sickness = sickness;
