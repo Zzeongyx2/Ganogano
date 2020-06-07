@@ -5,15 +5,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:textSize="32sp"
         android:id="@+id/title_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"/>
 
     <TextView
-        android:textSize="24sp"
         android:id="@+id/content_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:maxLines="1"
+        android:textColor="@android:color/darker_gray"/>
 
 </LinearLayout>

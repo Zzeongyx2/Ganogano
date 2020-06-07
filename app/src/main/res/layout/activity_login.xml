@@ -30,7 +30,7 @@
         android:text="Login In"
         android:textSize="25dp"
         android:textColor="#FFFFFF"
-        android:background="#0077FF"/>
+        android:background="@color/colorRV"/>
 
     <TextView
         android:id="@+id/TVSignIn"

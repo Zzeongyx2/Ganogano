@@ -7,9 +7,6 @@ public class Memo {
     private String content;
     private String key;
 
-    public Memo(){
-
-    }
 
     public Memo(String title, String content, String key){
         this.content = content;
@@ -41,14 +38,4 @@ public class Memo {
         this.key = key;
     }
 
-
-//    @NonNull
-//    @Override
-//    public String toString() {
-//        final StringBuffer sb = new StringBuffer("Memo{");
-//        sb.append("content ='").append(content).append('\'');
-//        sb.append("title ='").append(title).append('\'');
-//        sb.append('}');
-//        return sb.toString();
-//    }
 }
