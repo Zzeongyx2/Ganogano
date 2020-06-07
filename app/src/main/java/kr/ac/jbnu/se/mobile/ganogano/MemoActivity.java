@@ -133,7 +133,6 @@ public class memoActivity extends AppCompatActivity {
                Memo memo = dataSnapshot.getValue(Memo.class);
                memo.setKey(dataSnapshot.getKey());
                mMemoList.add(memo);
-               memoListMapper.put(memoNum, dataSnapshot.getKey());
                mAdapter.notifyDataSetChanged();
            }
 
@@ -141,10 +140,8 @@ public class memoActivity extends AppCompatActivity {
            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                Memo memo = dataSnapshot.getValue(Memo.class);
                memo.setKey(dataSnapshot.getKey());
-
                mMemoList.remove(memoNum);
                mMemoList.add(memoNum, memo);
-
                mAdapter.notifyDataSetChanged();
            }
 
