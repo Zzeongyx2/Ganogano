@@ -185,7 +185,6 @@ public class memoActivity extends AppCompatActivity {
                 database = mFirebaseDB.getReference("memo" + id);
                 memo.setKey(database.push().getKey());
                 database.push().setValue(memo);
-//                Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
                 memo.setKey(key);
             }
             else {
