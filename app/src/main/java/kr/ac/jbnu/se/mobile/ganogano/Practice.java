@@ -1,20 +1,24 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
 
-public class Practice{
+import java.util.ArrayList;
+
+public class Practice {
     private String aperiod, bperiod;
     private String hospital;
     private String key;
+    private ArrayList<Integer> day; // 년 월 일 을 저장하는 변수
 
-    public Practice(){
-
+    public Practice() {
+        day = new ArrayList<>();
     }
 
-    public Practice(String aperiod, String bperiod, String hospital, String key){
+    public Practice(String aperiod, String bperiod, String hospital, String key, ArrayList<Integer> day) {
         this.aperiod = aperiod;
         this.bperiod = bperiod;
         this.hospital = hospital;
         this.key = key;
+        this.day = day;
     }
 
 
@@ -25,8 +29,6 @@ public class Practice{
     public void setKey(String key) {
         this.key = key;
     }
-
-
 
     public String getHospital() {
         return hospital;
@@ -50,5 +52,13 @@ public class Practice{
 
     public void setBperiod(String bperiod) {
         this.bperiod = bperiod;
+    }
+
+    public ArrayList<Integer> getDay() {
+        return day;
+    }
+
+    public void setDay(ArrayList<Integer> day){
+        this.day=day;
     }
 }

@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -48,9 +49,9 @@ public class PracticeEditActivity extends AppCompatActivity {
     private DatabaseReference database;
 
     private String key;
-    private String aperiod, bperiod, hospital, dday;
+    private String aperiod, bperiod, hospital;
     private CheckBox DcheckBox;
-
+    private ArrayList<Integer> a_list, b_list, n_list;//a_list는 변경 값 , b_list는 D-Day로 설정된 마감날짜, n_list는 현재 페이지의 마감 날짜
     private Calendar mCalendar;
     private String result = null;
     final String dayformat = "%d 년 %d 월 %d일"; //날자형식
@@ -58,19 +59,24 @@ public class PracticeEditActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener BDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
-            // D-day 계산 결과 출력
-            result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
-            BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth));
-
+            //값 넣기
+            if(a_list!=null) a_list.clear();
+            a_list.add(a_year);
+            a_list.add(a_monthOfYear);
+            a_list.add(a_dayOfMonth);
+            BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear + 1, a_dayOfMonth));
         }
     };
     // DatePicker 에서 날짜 선택 시 호출
     private DatePickerDialog.OnDateSetListener ADateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
-            APeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth));
+            APeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear + 1, a_dayOfMonth));
         }
     };
+
+    public PracticeEditActivity() {
+    }
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -90,12 +96,21 @@ public class PracticeEditActivity extends AppCompatActivity {
         DcheckBox = findViewById(R.id.date_checkbox);
 
         Bundle bundle = getIntent().getExtras();
+        //전에 저장되었던 값 저장
 
         key = bundle.getString("key");
         aperiod = bundle.getString("aperiod");
         bperiod = bundle.getString("bperiod");
         hospital = bundle.getString("hospital");
+        n_list = bundle.getIntegerArrayList("day");
 
+        b_list = new ArrayList<>();
+        a_list = new ArrayList<>();
+        b_list.clear();//숫자를 유지하기 위해
+        b_list.add(sharedPref.getInt("year", 0));
+        b_list.add(sharedPref.getInt("month", 0));
+        b_list.add(sharedPref.getInt("date", 0));
+        System.out.println("번들의 사이즈야 : "+bundle.getIntegerArrayList("day").size());
         if (key != null) {
             BPeriodEditText.setText(bperiod);
             APeriodEditText.setText(aperiod);
@@ -136,11 +151,15 @@ public class PracticeEditActivity extends AppCompatActivity {
         DcheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DcheckBox.isChecked() == true) {
-                    editor.putString("D_DAY", result);
-                } else {
-                    editor.putString("D_DAY", "날짜가 설정되지 않았습니다");
+                if (DcheckBox.isChecked() == true && a_list.size()!=0) {
+                    n_list = a_list;
+                } else if(DcheckBox.isChecked() == false){
+                    n_list = b_list;
                 }
+                // 변경이 없을 경우 bundle 값 그대로. 클릭했으므로
+                editor.putInt("year", n_list.get(0));
+                editor.putInt("month", n_list.get(1));
+                editor.putInt("date", n_list.get(2));
                 editor.commit();
             }
         });
@@ -155,7 +174,7 @@ public class PracticeEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(key == null) {
+        if (key == null) {
             switch (item.getItemId()) {
                 case R.id.action_cancel:
                     cancel();
@@ -166,7 +185,7 @@ public class PracticeEditActivity extends AppCompatActivity {
                 default:
                     return super.onOptionsItemSelected(item);
             }
-        }else{
+        } else {
             switch (item.getItemId()) {
                 case R.id.action_cancel:
                     cancel();
@@ -187,49 +206,26 @@ public class PracticeEditActivity extends AppCompatActivity {
         intent.putExtra("bperiod", BPeriodEditText.getText().toString());
         intent.putExtra("hospital", mHospitalEditText.getText().toString());
         intent.putExtra("key", key);
+        intent.putExtra("day", n_list);
         setResult(RESULT_OK, intent);
         finish();
     }
 
-    private void cancel(){
+    private void cancel() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
-    private void save(){ ;
+    private void save() {
+
         Do_Notification("저장되었습니다.");
         Intent intent = new Intent();
         intent.putExtra("aperiod", APeriodEditText.getText().toString());
         intent.putExtra("bperiod", BPeriodEditText.getText().toString());
         intent.putExtra("hospital", mHospitalEditText.getText().toString());
+        intent.putExtra("day", a_list);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    private String getDday(int a_year, int a_monthOfYear, int a_dayOfMonth) {
-        // D-day 설정
-        final Calendar ddayCalendar = Calendar.getInstance();
-        ddayCalendar.set(a_year, a_monthOfYear, a_dayOfMonth);
-
-        // D-day 를 구하기 위해 millisecond 으로 환산하여 d-day 에서 today 의 차를 구한다.
-        final long dday = ddayCalendar.getTimeInMillis() / ONE_DAY;
-        final long today = Calendar.getInstance().getTimeInMillis() / ONE_DAY;
-        long result = dday - today;
-
-        // 출력 시 d-day 에 맞게 표시
-        final String strFormat;
-        if (result > 0) {
-            strFormat = "D-%d";
-        } else if (result == 0) {
-            strFormat = "D-Day";
-        } else {
-            result *= -1;
-            strFormat = "D+%d";
-        }
-
-        final String strCount = (String.format(strFormat, result));
-        return strCount; //결과 값 반환
-        //Todo: Shared
     }
 
     public void Do_Notification(String string) {
