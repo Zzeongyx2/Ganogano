@@ -11,10 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
 
         <activity android:name=".memoActivity" />
         <activity android:name=".MemoEditActivity" />
@@ -45,6 +41,12 @@
         <service
             android:name=".MusicService"
             android:enabled="true" />
+        <receiver android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

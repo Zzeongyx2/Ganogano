@@ -1,6 +1,5 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,8 @@ public class PracticeAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.item_practice, null);
 
             PracticeAdapter.ViewHolder holder = new PracticeAdapter.ViewHolder();
-            holder.periodTextView = (TextView)view.findViewById(R.id.period_text);
+            holder.aPeriodTextView = (TextView)view.findViewById(R.id.aperiod_text);
+            holder.bPeriodTextView = (TextView)view.findViewById(R.id.bperiod_text);
             holder.hospitalTextView = (TextView)view.findViewById(R.id.hospital_text);
 
             view.setTag(holder);
@@ -53,14 +53,16 @@ public class PracticeAdapter extends BaseAdapter {
         Practice inputPractice = mData.get(position);
         if (inputPractice != null) {
             PracticeAdapter.ViewHolder holder = (PracticeAdapter.ViewHolder)view.getTag();
-            holder.periodTextView.setText(inputPractice.getPeriod());
+            holder.aPeriodTextView.setText(inputPractice.getAperiod());
+            holder.bPeriodTextView.setText(inputPractice.getBperiod());
             holder.hospitalTextView.setText(inputPractice.getHospital());
         }
         return view;
     }
 
     private static class ViewHolder {
-        TextView periodTextView;
+        TextView aPeriodTextView;
+        TextView bPeriodTextView;
         TextView hospitalTextView;
     }
 }

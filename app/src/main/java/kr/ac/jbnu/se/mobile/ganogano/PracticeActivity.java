@@ -39,7 +39,6 @@ import java.util.Set;
 
 public class PracticeActivity extends AppCompatActivity {
 
-    //content_memo랑 menu_memoedit 이름 변경해서 재사용
 
     private static final String TAG = PracticeActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_PRACTICE = 1000;
@@ -49,7 +48,7 @@ public class PracticeActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference database;
 
-    SharedPreferences sf; //이미 저장된 값 가져오기
+    SharedPreferences sf;
 
     private static HashMap<Integer, String> practiceListMapper = new HashMap<Integer, String>();
     private List<Practice> mPracticeList = new ArrayList<>();
@@ -84,7 +83,8 @@ public class PracticeActivity extends AppCompatActivity {
                             Practice practice = mPracticeList.get(position);
                             Bundle bundle = new Bundle();
                             bundle.putString("key", practice.getKey());
-                            bundle.putString("period", practice.getPeriod());
+                            bundle.putString("aperiod", practice.getAperiod());
+                            bundle.putString("bperiod", practice.getBperiod());
                             bundle.putString("hospital", practice.getHospital());
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
@@ -186,11 +186,13 @@ public class PracticeActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_NEW_PRACTICE) {
             if (resultCode == RESULT_OK) {
-                String period = data.getStringExtra("period");
+                String aperiod = data.getStringExtra("aperiod");
+                String bperiod = data.getStringExtra("bperiod");
                 String hospital = data.getStringExtra("hospital");
                 String newkey = data.getStringExtra("key");
-                Practice practice = new Practice(period, hospital, newkey);
-                practice.setPeriod(period);
+                Practice practice = new Practice(aperiod, bperiod, hospital, newkey);
+                practice.setAperiod(aperiod);
+                practice.setBperiod(bperiod);
                 practice.setHospital(hospital);
                 String id = mFirebaseAuth.getUid();
                 database = mFirebaseDB.getReference("practice" + id);
@@ -202,7 +204,8 @@ public class PracticeActivity extends AppCompatActivity {
         } if (requestCode == REQUEST_CODE_RENEW_PRACTICE) {
             if (resultCode == RESULT_OK) {
                 String key = data.getStringExtra("key");
-                String period = data.getStringExtra("period");
+                String aperiod = data.getStringExtra("aperiod");
+                String bperiod = data.getStringExtra("bperiod");
                 String hospital = data.getStringExtra("hospital");
 
                 for (Map.Entry<Integer, String> entry : practiceListMapper.entrySet()) {
@@ -212,7 +215,8 @@ public class PracticeActivity extends AppCompatActivity {
                 }
                 database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(key);
                 Map<String, Object> renew = new HashMap<String, Object>();
-                renew.put("period", period);
+                renew.put("aperiod", aperiod);
+                renew.put("bperiod", bperiod);
                 renew.put("hospital", hospital);
                 database.updateChildren(renew);
 

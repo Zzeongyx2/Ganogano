@@ -121,19 +121,14 @@ public class PatientCaseEditActivity extends AppCompatActivity {
         //알람 설정
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_box_black_24dp)) //BitMap 이미지 요구
-                .setContentTitle("가노간호 케이스")
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_box_black_24dp))
+                .setContentTitle("가노간호 환자케이스")
                 .setContentText(string)
-                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
-                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) //알림 바가 안뜨면 여기 수정해 보기
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-        //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground);
             CharSequence channelName = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -141,16 +136,14 @@ public class PatientCaseEditActivity extends AppCompatActivity {
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
             channel.setDescription(description);
 
-            // 노티피케이션 채널을 시스템에 등록
             assert notificationManager != null;
-            //notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
 
         } else
-            builder.setSmallIcon(R.mipmap.ic_launcher); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+            builder.setSmallIcon(R.mipmap.ic_launcher);
 
         assert notificationManager != null;
-        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+        notificationManager.notify(1234, builder.build());
 
     }
 }

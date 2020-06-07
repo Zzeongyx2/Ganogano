@@ -8,9 +8,6 @@ public class PatientCase{
     private String etc;
     private String key;
 
-    public PatientCase(){
-
-    }
 
     public PatientCase(String sickness, String prescription, String precaution, String etc, String key){
         this.sickness = sickness;
@@ -62,14 +59,4 @@ public class PatientCase{
         this.etc = etc;
     }
 
-
-//    @NonNull
-//    @Override
-//    public String toString() {
-//        final StringBuffer sb = new StringBuffer("Memo{");
-//        sb.append("content ='").append(content).append('\'');
-//        sb.append("title ='").append(title).append('\'');
-//        sb.append('}');
-//        return sb.toString();
-//    }
 }

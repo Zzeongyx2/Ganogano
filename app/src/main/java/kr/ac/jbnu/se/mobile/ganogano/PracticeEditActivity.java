@@ -34,7 +34,7 @@ import java.util.Locale;
 
 public class PracticeEditActivity extends AppCompatActivity {
 
-    private TextView mPeriodEditText;
+    private TextView APeriodEditText, BPeriodEditText;
     private EditText mHospitalEditText;
 
     private final int ONE_DAY = 24 * 60 * 60 * 1000;
@@ -48,20 +48,27 @@ public class PracticeEditActivity extends AppCompatActivity {
     private DatabaseReference database;
 
     private String key;
-    private String period, hospital, dday;
+    private String aperiod, bperiod, hospital, dday;
     private CheckBox DcheckBox;
 
     private Calendar mCalendar;
     private String result = null;
     final String dayformat = "%d 년 %d 월 %d일"; //날자형식
 
-    // DatePicker 에서 날짜 선택 시 호출
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener BDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
             // D-day 계산 결과 출력
             result = getDday(a_year, a_monthOfYear, a_dayOfMonth);
-            mPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear, a_dayOfMonth));
+            BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth));
+
+        }
+    };
+    // DatePicker 에서 날짜 선택 시 호출
+    private DatePickerDialog.OnDateSetListener ADateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker a_view, int a_year, int a_monthOfYear, int a_dayOfMonth) {
+            APeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear+1, a_dayOfMonth));
         }
     };
 
@@ -77,36 +84,51 @@ public class PracticeEditActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
 
-        mPeriodEditText = (TextView) findViewById(R.id.period_edit);
+        BPeriodEditText = (TextView) findViewById(R.id.period_edit_end);
+        APeriodEditText = (TextView) findViewById(R.id.period_edit_start);
         mHospitalEditText = (EditText) findViewById(R.id.hospital_edit);
         DcheckBox = findViewById(R.id.date_checkbox);
 
         Bundle bundle = getIntent().getExtras();
 
         key = bundle.getString("key");
-        period = bundle.getString("period");
+        aperiod = bundle.getString("aperiod");
+        bperiod = bundle.getString("bperiod");
         hospital = bundle.getString("hospital");
 
         if (key != null) {
-            mPeriodEditText.setText(period);
+            BPeriodEditText.setText(bperiod);
+            APeriodEditText.setText(aperiod);
             mHospitalEditText.setText(hospital);
         }
 
-        // 한국어 설정 (ex: date picker)
         Locale.setDefault(Locale.KOREAN);
 
-        // 현재 날짜를 알기 위해 사용
         mCalendar = new GregorianCalendar();
 
         // Input date click 시 date picker 호출
-        mPeriodEditText.setOnClickListener(new View.OnClickListener() {
+        BPeriodEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View a_view) {
                 final int year = mCalendar.get(Calendar.YEAR);
                 final int month = mCalendar.get(Calendar.MONTH);
                 final int day = mCalendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, mDateSetListener, year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, BDateSetListener, year, month, day);
+
+                dialog.show();
+            }
+        });
+
+        // Input date click 시 date picker 호출
+        APeriodEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View a_view) {
+                final int year = mCalendar.get(Calendar.YEAR);
+                final int month = mCalendar.get(Calendar.MONTH);
+                final int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(PracticeEditActivity.this, ADateSetListener, year, month, day);
                 dialog.show();
             }
         });
@@ -161,7 +183,8 @@ public class PracticeEditActivity extends AppCompatActivity {
     private void renew() {
         Do_Notification("수정되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("period", mPeriodEditText.getText().toString());
+        intent.putExtra("aperiod", APeriodEditText.getText().toString());
+        intent.putExtra("bperiod", BPeriodEditText.getText().toString());
         intent.putExtra("hospital", mHospitalEditText.getText().toString());
         intent.putExtra("key", key);
         setResult(RESULT_OK, intent);
@@ -176,7 +199,8 @@ public class PracticeEditActivity extends AppCompatActivity {
     private void save(){ ;
         Do_Notification("저장되었습니다.");
         Intent intent = new Intent();
-        intent.putExtra("period", mPeriodEditText.getText().toString());
+        intent.putExtra("aperiod", APeriodEditText.getText().toString());
+        intent.putExtra("bperiod", BPeriodEditText.getText().toString());
         intent.putExtra("hospital", mHospitalEditText.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
@@ -212,19 +236,14 @@ public class PracticeEditActivity extends AppCompatActivity {
         //알람 설정
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_box_black_24dp)) //BitMap 이미지 요구
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_box_black_24dp))
                 .setContentTitle("가노간호 실습")
                 .setContentText(string)
-                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
-                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) //알림 바가 안뜨면 여기 수정해 보기
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-        //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground);
             CharSequence channelName = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -232,16 +251,14 @@ public class PracticeEditActivity extends AppCompatActivity {
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
             channel.setDescription(description);
 
-            // 노티피케이션 채널을 시스템에 등록
             assert notificationManager != null;
-            //notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
 
         } else
-            builder.setSmallIcon(R.mipmap.ic_launcher); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+            builder.setSmallIcon(R.mipmap.ic_launcher);
 
         assert notificationManager != null;
-        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+        notificationManager.notify(1234, builder.build());
     }
 }
 

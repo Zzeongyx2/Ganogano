@@ -1,26 +1,20 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
-import androidx.annotation.NonNull;
 
 public class Practice{
-    private String period;
+    private String aperiod, bperiod;
     private String hospital;
     private String key;
 
-    public Practice(){
 
-    }
 
-    public Practice(String period, String hospital, String key){
-        this.period = period;
+    public Practice(String aperiod, String bperiod, String hospital, String key){
+        this.aperiod = aperiod;
+        this.bperiod = bperiod;
         this.hospital = hospital;
         this.key = key;
     }
 
-    public Practice(String period, String hospital){
-        this.period = period;
-        this.hospital = hospital;
-    }
 
     public String getKey() {
         return key;
@@ -30,13 +24,7 @@ public class Practice{
         this.key = key;
     }
 
-    public String getPeriod() {
-        return period;
-    }
 
-    public void setPeriod(String period) {
-        this.period = period;
-    }
 
     public String getHospital() {
         return hospital;
@@ -46,4 +34,19 @@ public class Practice{
         this.hospital = hospital;
     }
 
+    public String getAperiod() {
+        return aperiod;
+    }
+
+    public void setAperiod(String aperiod) {
+        this.aperiod = aperiod;
+    }
+
+    public String getBperiod() {
+        return bperiod;
+    }
+
+    public void setBperiod(String bperiod) {
+        this.bperiod = bperiod;
+    }
 }
