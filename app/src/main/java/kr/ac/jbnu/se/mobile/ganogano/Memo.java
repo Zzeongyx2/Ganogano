@@ -7,6 +7,9 @@ public class Memo {
     private String content;
     private String key;
 
+    public Memo(){
+
+    }
 
     public Memo(String title, String content, String key){
         this.content = content;

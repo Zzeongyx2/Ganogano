@@ -63,10 +63,10 @@ public class PracticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        setTitle("실습노트");
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
-
         mPracticeListView = (ListView) findViewById(R.id.memo_list);
 
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -86,6 +86,8 @@ public class PracticeActivity extends AppCompatActivity {
                             bundle.putString("aperiod", practice.getAperiod());
                             bundle.putString("bperiod", practice.getBperiod());
                             bundle.putString("hospital", practice.getHospital());
+                            bundle.putIntegerArrayList("day",practice.getDay());
+
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
                             startActivityForResult(intent, REQUEST_CODE_RENEW_PRACTICE);
@@ -103,17 +105,18 @@ public class PracticeActivity extends AppCompatActivity {
             }
         });
 
-
         mPracticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "===================================================== clicked");
                 Practice practice = mPracticeList.get(position);
+                practiceNum = position;
                 Bundle bundle = new Bundle();
                 bundle.putString("parentKey", practice.getKey());
+                bundle.putString("parentHospital", practice.getHospital());
                 Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
                 I.putExtras(bundle);
                 startActivity(I);
+                finish();
             }
         });
 
@@ -142,8 +145,6 @@ public class PracticeActivity extends AppCompatActivity {
                 Practice practice = dataSnapshot.getValue(Practice.class);
                 practice.setKey(dataSnapshot.getKey());
                 mPracticeList.add(practice);
-                practiceListMapper.put(practiceNum, dataSnapshot.getKey());
-
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -151,10 +152,8 @@ public class PracticeActivity extends AppCompatActivity {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Practice practice = dataSnapshot.getValue(Practice.class);
                 practice.setKey(dataSnapshot.getKey());
-
                 mPracticeList.remove(practiceNum);
                 mPracticeList.add(practiceNum, practice);
-
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -190,10 +189,14 @@ public class PracticeActivity extends AppCompatActivity {
                 String bperiod = data.getStringExtra("bperiod");
                 String hospital = data.getStringExtra("hospital");
                 String newkey = data.getStringExtra("key");
-                Practice practice = new Practice(aperiod, bperiod, hospital, newkey);
+                ArrayList<Integer> day = data.getIntegerArrayListExtra("day");
+
+                Practice practice = new Practice(aperiod, bperiod, hospital, newkey,day);
                 practice.setAperiod(aperiod);
                 practice.setBperiod(bperiod);
                 practice.setHospital(hospital);
+                practice.setDay(day);
+
                 String id = mFirebaseAuth.getUid();
                 database = mFirebaseDB.getReference("practice" + id);
                 practice.setKey(database.push().getKey());
@@ -207,6 +210,7 @@ public class PracticeActivity extends AppCompatActivity {
                 String aperiod = data.getStringExtra("aperiod");
                 String bperiod = data.getStringExtra("bperiod");
                 String hospital = data.getStringExtra("hospital");
+                ArrayList<Integer> day = data.getIntegerArrayListExtra("day");
 
                 for (Map.Entry<Integer, String> entry : practiceListMapper.entrySet()) {
                     if (entry.getValue().equals(key)) {
@@ -218,6 +222,7 @@ public class PracticeActivity extends AppCompatActivity {
                 renew.put("aperiod", aperiod);
                 renew.put("bperiod", bperiod);
                 renew.put("hospital", hospital);
+                renew.put("day",day);
                 database.updateChildren(renew);
 
             } else{

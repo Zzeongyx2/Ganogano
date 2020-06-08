@@ -54,7 +54,8 @@ public class PatientCaseActivity extends AppCompatActivity {
     private PatientCaseAdapter mAdapter;
     private ListView mPatientCaseListView;
 
-    String parentKey;
+    private String parentKey;
+    private String parentHospital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,9 @@ public class PatientCaseActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         parentKey = b.getString("parentKey");
+        parentHospital = b.getString("parentHospital");
+
+        setTitle(parentHospital + " 환자케이스");
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
@@ -208,7 +212,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                 String precaution = data.getStringExtra("precaution");
                 String etc = data.getStringExtra("etc");
                 String key = data.getStringExtra("key");
-                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child("case").child(key);
+                database = mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(parentKey).child("case").child(key);
                 Map<String, Object> renew = new HashMap<String, Object>();
                 renew.put("sickness", sickness);
                 renew.put("prescription", prescription);
