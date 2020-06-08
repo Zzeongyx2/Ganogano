@@ -1,30 +1,22 @@
 package kr.ac.jbnu.se.mobile.ganogano;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -36,11 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG;
+public class MemoActivity extends AppCompatActivity {
 
-public class memoActivity extends AppCompatActivity {
-
-    private static final String TAG = memoActivity.class.getSimpleName();
+    private static final String TAG = MemoActivity.class.getSimpleName();
     public static final int REQUEST_CODE_NEW_MEMO = 1000;
     private static final int REQUEST_CODE_RENEW_MEMO = 2000;
 
@@ -59,6 +49,7 @@ public class memoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        setTitle("학습메모");
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
@@ -74,7 +65,7 @@ public class memoActivity extends AppCompatActivity {
                 bundle.putString("key",memo.getKey());
                 bundle.putString("title",memo.getTitle());
                 bundle.putString("content", memo.getContent());
-                Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
+                Intent intent = new Intent(MemoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_RENEW_MEMO);
             }
@@ -114,7 +105,7 @@ public class memoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("key", null);
-                Intent intent = new Intent(memoActivity.this, MemoEditActivity.class);
+                Intent intent = new Intent(MemoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_NEW_MEMO);
             }

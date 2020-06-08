@@ -54,16 +54,19 @@ public class PatientCaseActivity extends AppCompatActivity {
     private PatientCaseAdapter mAdapter;
     private ListView mPatientCaseListView;
 
-    String parentKey;
+    private String parentKey;
+    private String parentHospital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-
         Bundle b = getIntent().getExtras();
         parentKey = b.getString("parentKey");
+        parentHospital = b.getString("parentHospital");
+
+        setTitle(parentHospital + " 환자케이스");
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();

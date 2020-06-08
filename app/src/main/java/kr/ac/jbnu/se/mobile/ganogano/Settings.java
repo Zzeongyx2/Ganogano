@@ -19,6 +19,7 @@ public class Settings extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        setTitle("환경설정");
         bgm = findViewById(R.id.btn_bgm);
         effect = findViewById(R.id.btn_effect);
         //===============상태저장=================//

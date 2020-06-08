@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".memoActivity" />
+        <activity android:name=".MemoActivity" />
         <activity android:name=".MemoEditActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".PracticeActivity" />
