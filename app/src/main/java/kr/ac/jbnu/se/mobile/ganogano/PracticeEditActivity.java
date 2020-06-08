@@ -110,7 +110,6 @@ public class PracticeEditActivity extends AppCompatActivity {
         b_list.add(sharedPref.getInt("year", 0));
         b_list.add(sharedPref.getInt("month", 0));
         b_list.add(sharedPref.getInt("date", 0));
-        System.out.println("번들의 사이즈야 : "+bundle.getIntegerArrayList("day").size());
         if (key != null) {
             BPeriodEditText.setText(bperiod);
             APeriodEditText.setText(aperiod);
