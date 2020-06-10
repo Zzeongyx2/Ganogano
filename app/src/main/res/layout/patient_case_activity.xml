@@ -29,7 +29,8 @@
             android:gravity="center"
             android:background="@color/colorBRWhite"
             android:hint="병명을 입력하세요."
-            android:inputType="text" />
+            android:inputType="text"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -55,7 +56,8 @@
             android:background="@color/colorBRWhite"
             android:gravity="center"
             android:hint="처방을 입력하세요."
-            android:inputType="text" />
+            android:inputType="text"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -81,7 +83,8 @@
             android:gravity="center"
             android:background="@color/colorBRWhite"
             android:hint="주의사항을 입력하세요."
-            android:inputType="text" />
+            android:inputType="text"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -107,7 +110,8 @@
             android:gravity="center"
             android:hint="기타사항을 입력하세요."
             android:background="@color/colorBRWhite"
-            android:inputType="text" />
+            android:inputType="text"
+            android:scrollbars="vertical"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -51,7 +51,7 @@ public class PracticeEditActivity extends AppCompatActivity {
     private String key;
     private String aperiod, bperiod, hospital;
     private CheckBox DcheckBox;
-    private ArrayList<Integer> a_list, b_list, n_list;//a_list는 변경 값 , b_list는 D-Day로 설정된 마감날짜, n_list는 현재 페이지의 마감 날짜
+    private ArrayList<Integer> a_list, b_list, n_list, u_list;//a_list는 변경 값 , b_list는 D-Day로 설정된 마감날짜, n_list는 현재 페이지의 마감 날짜
     private Calendar mCalendar;
     private String result = null;
     final String dayformat = "%d 년 %d 월 %d일"; //날자형식
@@ -64,6 +64,7 @@ public class PracticeEditActivity extends AppCompatActivity {
             a_list.add(a_year);
             a_list.add(a_monthOfYear);
             a_list.add(a_dayOfMonth);
+            n_list = a_list;
             BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear + 1, a_dayOfMonth));
         }
     };
@@ -110,6 +111,7 @@ public class PracticeEditActivity extends AppCompatActivity {
         b_list.add(sharedPref.getInt("year", 0));
         b_list.add(sharedPref.getInt("month", 0));
         b_list.add(sharedPref.getInt("date", 0));
+        u_list = new ArrayList<>();//임시변수
         if (key != null) {
             BPeriodEditText.setText(bperiod);
             APeriodEditText.setText(aperiod);
@@ -150,15 +152,16 @@ public class PracticeEditActivity extends AppCompatActivity {
         DcheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                u_list = n_list;
                 if (DcheckBox.isChecked() == true && a_list.size()!=0) {
-                    n_list = a_list;
+                    u_list = a_list;
                 } else if(DcheckBox.isChecked() == false){
-                    n_list = b_list;
+                    u_list = b_list;
                 }
                 // 변경이 없을 경우 bundle 값 그대로. 클릭했으므로
-                editor.putInt("year", n_list.get(0));
-                editor.putInt("month", n_list.get(1));
-                editor.putInt("date", n_list.get(2));
+                editor.putInt("year", u_list.get(0));
+                editor.putInt("month", u_list.get(1));
+                editor.putInt("date", u_list.get(2));
                 editor.commit();
             }
         });
