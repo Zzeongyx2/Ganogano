@@ -86,7 +86,7 @@ public class PracticeActivity extends AppCompatActivity {
                             bundle.putString("aperiod", practice.getAperiod());
                             bundle.putString("bperiod", practice.getBperiod());
                             bundle.putString("hospital", practice.getHospital());
-                            bundle.putIntegerArrayList("day",practice.getDay());
+                            bundle.putIntegerArrayList("day", practice.getDay());
 
                             Intent intent = new Intent(PracticeActivity.this, PracticeEditActivity.class);
                             intent.putExtras(bundle);
@@ -115,7 +115,6 @@ public class PracticeActivity extends AppCompatActivity {
                 Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
                 I.putExtras(bundle);
                 startActivity(I);
-                finish();
             }
         });
 
@@ -190,7 +189,7 @@ public class PracticeActivity extends AppCompatActivity {
                 String newkey = data.getStringExtra("key");
                 ArrayList<Integer> day = data.getIntegerArrayListExtra("day");
 
-                Practice practice = new Practice(aperiod, bperiod, hospital, newkey,day);
+                Practice practice = new Practice(aperiod, bperiod, hospital, newkey, day);
                 practice.setAperiod(aperiod);
                 practice.setBperiod(bperiod);
                 practice.setHospital(hospital);
@@ -203,7 +202,8 @@ public class PracticeActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
-        } if (requestCode == REQUEST_CODE_RENEW_PRACTICE) {
+        }
+        if (requestCode == REQUEST_CODE_RENEW_PRACTICE) {
             if (resultCode == RESULT_OK) {
                 String key = data.getStringExtra("key");
                 String aperiod = data.getStringExtra("aperiod");
@@ -221,10 +221,10 @@ public class PracticeActivity extends AppCompatActivity {
                 renew.put("aperiod", aperiod);
                 renew.put("bperiod", bperiod);
                 renew.put("hospital", hospital);
-                renew.put("day",day);
+                renew.put("day", day);
                 database.updateChildren(renew);
 
-            } else{
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

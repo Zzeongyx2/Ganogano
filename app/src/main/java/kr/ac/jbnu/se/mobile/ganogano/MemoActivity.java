@@ -40,7 +40,8 @@ public class MemoActivity extends AppCompatActivity {
 
     private static HashMap<Integer, String> memoListMapper = new HashMap<Integer, String>();
 
-    private List<Memo> mMemoList = new ArrayList<>();;
+    private List<Memo> mMemoList = new ArrayList<>();
+    ;
     private MemoAdapter mAdapter;
     private ListView mMemoListView;
     private static int memoNum = 0;
@@ -61,8 +62,8 @@ public class MemoActivity extends AppCompatActivity {
                 Memo memo = mMemoList.get(position);
                 memoNum = position;
                 Bundle bundle = new Bundle();
-                bundle.putString("key",memo.getKey());
-                bundle.putString("title",memo.getTitle());
+                bundle.putString("key", memo.getKey());
+                bundle.putString("title", memo.getTitle());
                 bundle.putString("content", memo.getContent());
                 Intent intent = new Intent(MemoActivity.this, MemoEditActivity.class);
                 intent.putExtras(bundle);
@@ -116,40 +117,40 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     private void initDatabase() {
-        database = FirebaseDatabase.getInstance().getReference("memo"+mFirebaseAuth.getUid());
-       database.addChildEventListener(new ChildEventListener() {
-           @Override
-           public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-               Memo memo = dataSnapshot.getValue(Memo.class);
-               memo.setKey(dataSnapshot.getKey());
-               mMemoList.add(memo);
-               mAdapter.notifyDataSetChanged();
-           }
+        database = FirebaseDatabase.getInstance().getReference("memo" + mFirebaseAuth.getUid());
+        database.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Memo memo = dataSnapshot.getValue(Memo.class);
+                memo.setKey(dataSnapshot.getKey());
+                mMemoList.add(memo);
+                mAdapter.notifyDataSetChanged();
+            }
 
-           @Override
-           public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-               Memo memo = dataSnapshot.getValue(Memo.class);
-               memo.setKey(dataSnapshot.getKey());
-               mMemoList.remove(memoNum);
-               mMemoList.add(memoNum, memo);
-               mAdapter.notifyDataSetChanged();
-           }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Memo memo = dataSnapshot.getValue(Memo.class);
+                memo.setKey(dataSnapshot.getKey());
+                mMemoList.remove(memoNum);
+                mMemoList.add(memoNum, memo);
+                mAdapter.notifyDataSetChanged();
+            }
 
-           @Override
-           public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-           }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
 
 
-           @Override
-           public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-           }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-           }
-       });
+            }
+        });
     }
 
     @Override
@@ -173,11 +174,11 @@ public class MemoActivity extends AppCompatActivity {
                 memo.setKey(database.push().getKey());
                 database.push().setValue(memo);
                 memo.setKey(key);
-            }
-            else {
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
-        }if(requestCode == REQUEST_CODE_RENEW_MEMO) {
+        }
+        if (requestCode == REQUEST_CODE_RENEW_MEMO) {
             if (resultCode == RESULT_OK) {
                 String key = data.getStringExtra("key");
                 String title = data.getStringExtra("title");
@@ -188,7 +189,7 @@ public class MemoActivity extends AppCompatActivity {
                 renew.put("content", content);
                 database.updateChildren(renew);
                 mAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }

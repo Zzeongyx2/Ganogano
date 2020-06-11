@@ -99,6 +99,8 @@ public class MemoEditActivity extends AppCompatActivity {
     private void renew() {
         Do_Notification("수정되었습니다.");
         Intent intent = new Intent();
+        intent.setAction("example.test.broadcast");
+        sendBroadcast(intent);
         intent.putExtra("key",key);
         intent.putExtra("title", mTitleEditText.getText().toString());
         intent.putExtra("content", mContentEditText.getText().toString());

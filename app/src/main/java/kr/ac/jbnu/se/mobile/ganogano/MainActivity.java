@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent I = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(I);
                 finish();
-
             }
         });
         receiver = new BroadcastReceiver() {
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);
-
     }
 
     private String getDday(int a_year, int a_monthOfYear, int a_dayOfMonth) {
