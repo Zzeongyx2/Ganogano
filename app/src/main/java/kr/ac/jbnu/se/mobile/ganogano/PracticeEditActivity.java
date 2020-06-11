@@ -65,6 +65,7 @@ public class PracticeEditActivity extends AppCompatActivity {
             a_list.add(a_monthOfYear);
             a_list.add(a_dayOfMonth);
             n_list = a_list;
+
             BPeriodEditText.setText(String.format(dayformat, a_year, a_monthOfYear + 1, a_dayOfMonth));
         }
     };
@@ -112,6 +113,7 @@ public class PracticeEditActivity extends AppCompatActivity {
         b_list.add(sharedPref.getInt("month", 0));
         b_list.add(sharedPref.getInt("date", 0));
         u_list = new ArrayList<>();//임시변수
+
         if (key != null) {
             BPeriodEditText.setText(bperiod);
             APeriodEditText.setText(aperiod);

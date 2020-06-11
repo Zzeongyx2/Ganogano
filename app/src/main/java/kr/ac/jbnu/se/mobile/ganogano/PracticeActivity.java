@@ -63,10 +63,10 @@ public class PracticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        setTitle("실습노트");
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
-
         mPracticeListView = (ListView) findViewById(R.id.memo_list);
 
         mPracticeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -112,9 +112,11 @@ public class PracticeActivity extends AppCompatActivity {
                 practiceNum = position;
                 Bundle bundle = new Bundle();
                 bundle.putString("parentKey", practice.getKey());
+                bundle.putString("parentHospital", practice.getHospital());
                 Intent I = new Intent(PracticeActivity.this, PatientCaseActivity.class);
                 I.putExtras(bundle);
                 startActivity(I);
+                finish();
             }
         });
 

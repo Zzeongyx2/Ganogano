@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     TextView DDay;
     private final int ONE_DAY = 24 * 60 * 60 * 1000;
     BroadcastReceiver receiver;
-    String array[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(receiver);
     }
+
 
     private String getDday(int a_year, int a_monthOfYear, int a_dayOfMonth) {
         // D-day 설정
