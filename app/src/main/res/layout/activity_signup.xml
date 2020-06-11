@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="Sign Up"
-        android:textColor="#FCF5EF"
-        android:background="#0077FF" />
+        android:textColor="#FFFFFF"
+        android:background="@color/colorRV" />
     <TextView
         android:id="@+id/TVSignIn"
         android:layout_width="match_parent"

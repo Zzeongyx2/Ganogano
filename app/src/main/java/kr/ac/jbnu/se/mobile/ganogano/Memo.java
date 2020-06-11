@@ -41,14 +41,4 @@ public class Memo {
         this.key = key;
     }
 
-
-//    @NonNull
-//    @Override
-//    public String toString() {
-//        final StringBuffer sb = new StringBuffer("Memo{");
-//        sb.append("content ='").append(content).append('\'');
-//        sb.append("title ='").append(title).append('\'');
-//        sb.append('}');
-//        return sb.toString();
-//    }
 }
