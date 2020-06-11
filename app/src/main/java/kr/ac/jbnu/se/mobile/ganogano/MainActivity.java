@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {
                     Toast.makeText(context, "충전기 연결!", Toast.LENGTH_LONG).show();
                 } else if (intent.getAction().equals(Intent.ACTION_BATTERY_LOW)) {
-                    Toast.makeText(context, "배터리 부족!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "배터리 부족! 충전기를 연결해 주세요", Toast.LENGTH_LONG).show();
                 }
             }
         };
