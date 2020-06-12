@@ -32,7 +32,7 @@ public class Settings extends Activity {
         bgm.setChecked(sharedPref.getBoolean("bgm", false));
 
         //==================배경음악==============//
-        intent = new Intent(this,MusicService.class);
+        intent = new Intent(this, MusicService.class);
     }
 
     public void bgm(View o) {
