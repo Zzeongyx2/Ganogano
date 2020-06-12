@@ -52,6 +52,7 @@ public class MemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         setTitle("학습메모");
 
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDB = FirebaseDatabase.getInstance();
 
