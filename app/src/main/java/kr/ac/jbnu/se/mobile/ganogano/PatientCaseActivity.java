@@ -50,7 +50,8 @@ public class PatientCaseActivity extends AppCompatActivity {
     private static HashMap<Integer, String> caseListMapper = new HashMap<Integer, String>();
     private static int caseNum = 0;
 
-    private List<PatientCase> mPatientCaseList = new ArrayList<>();;
+    private List<PatientCase> mPatientCaseList = new ArrayList<>();
+    ;
     private PatientCaseAdapter mAdapter;
     private ListView mPatientCaseListView;
 
@@ -78,10 +79,10 @@ public class PatientCaseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PatientCase patientCase = mPatientCaseList.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("key",patientCase.getKey());
-                bundle.putString("sickness",patientCase.getSickness());
+                bundle.putString("key", patientCase.getKey());
+                bundle.putString("sickness", patientCase.getSickness());
                 bundle.putString("prescription", patientCase.getPrescription());
-                bundle.putString("precaution",patientCase.getPrecaution());
+                bundle.putString("precaution", patientCase.getPrecaution());
                 bundle.putString("etc", patientCase.getEtc());
                 Intent intent = new Intent(PatientCaseActivity.this, PatientCaseEditActivity.class);
                 intent.putExtras(bundle);
@@ -103,7 +104,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                                 mPatientCaseList.remove(pos);
                                 mAdapter.notifyDataSetChanged();
                                 String key = patientCase.getKey();
-                                mFirebaseDB.getReference("practice"+ mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
+                                mFirebaseDB.getReference("practice" + mFirebaseAuth.getUid()).child(parentKey).child("case").child(key).removeValue();
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -136,7 +137,7 @@ public class PatientCaseActivity extends AppCompatActivity {
     }
 
     private void initDatabase() {
-        database = FirebaseDatabase.getInstance().getReference("practice"+mFirebaseAuth.getUid()).child(parentKey).child("case");
+        database = FirebaseDatabase.getInstance().getReference("practice" + mFirebaseAuth.getUid()).child(parentKey).child("case");
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -201,11 +202,11 @@ public class PatientCaseActivity extends AppCompatActivity {
                 patientCase.setKey(database.push().getKey());
                 database.push().setValue(patientCase);
                 patientCase.setKey(key);
-            }
-            else {
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
-        }if(requestCode == REQUEST_CODE_RENEW_CASE) {
+        }
+        if (requestCode == REQUEST_CODE_RENEW_CASE) {
             if (resultCode == RESULT_OK) {
                 String sickness = data.getStringExtra("sickness");
                 String prescription = data.getStringExtra("prescription");
@@ -220,7 +221,7 @@ public class PatientCaseActivity extends AppCompatActivity {
                 renew.put("etc", etc);
                 database.updateChildren(renew);
                 mAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
             }
         }
