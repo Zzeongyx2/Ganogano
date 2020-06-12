@@ -28,17 +28,13 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         mediaPlayer.start();
-
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         mediaPlayer.stop();
-
     }
 }
